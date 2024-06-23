@@ -15,4 +15,6 @@ interface ExpirationRepo {
     suspend fun getById(id: Int): ExpirationEntryWithProduct
 
     fun getList(): LiveData<List<ExpirationEntryWithProduct>>
+
+    suspend fun getByProductId(id: Int): List<ExpirationEntryWithProduct>
 }

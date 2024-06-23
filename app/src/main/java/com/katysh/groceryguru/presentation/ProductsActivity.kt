@@ -1,11 +1,13 @@
 package com.katysh.groceryguru.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityProductsBinding
+import com.katysh.groceryguru.model.Product
 import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
@@ -44,11 +46,22 @@ class ProductsActivity : AppCompatActivity() {
 
         binding.productsRv.layoutManager = LinearLayoutManager(this)
         binding.productsRv.adapter = adapter
+        adapter.onClickListener = {
+            productClickListener(it)
+        }
     }
 
     private fun observeViewModel() {
         viewModel.productsLD.observe(this) {
             adapter.setProducts(it)
         }
+        viewModel.errorLD.observe(this) {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun productClickListener(product: Product) {
+        val dialog = ProductMenuDialog(this, product, viewModel) {}
+        dialog.show(supportFragmentManager, "TaskMenuDialog")
     }
 }

@@ -11,6 +11,7 @@ import com.katysh.groceryguru.model.ExpirationEntryWithProduct
 class ExpirationAdapter : RecyclerView.Adapter<ExpirationViewHolder>() {
 
     private var entries: List<ExpirationEntryWithProduct> = ArrayList()
+    var onClickListener: ((ExpirationEntryWithProduct) -> Unit)? = null
 
     fun setEntries(entries: List<ExpirationEntryWithProduct>) {
         this.entries = entries
@@ -27,6 +28,9 @@ class ExpirationAdapter : RecyclerView.Adapter<ExpirationViewHolder>() {
         val entry = entries[position]
         holder.productTv.text = entry.product.title
         holder.infoTv.text = entry.expirationEntry.getInfo()
+        holder.itemView.setOnClickListener {
+            onClickListener?.invoke(entry)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -35,11 +39,7 @@ class ExpirationAdapter : RecyclerView.Adapter<ExpirationViewHolder>() {
 }
 
 class ExpirationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val productTv: TextView
-    val infoTv: TextView
+    val productTv: TextView = itemView.findViewById(R.id.productTv)
+    val infoTv: TextView = itemView.findViewById(R.id.infoTv)
 
-    init {
-        productTv = itemView.findViewById(R.id.productTv)
-        infoTv = itemView.findViewById(R.id.infoTv)
-    }
 }

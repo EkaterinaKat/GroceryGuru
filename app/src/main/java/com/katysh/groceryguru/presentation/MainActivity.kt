@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityMainBinding
+import com.katysh.groceryguru.model.ExpirationEntryWithProduct
 import com.katysh.groceryguru.presentation.recycleview.ExpirationAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ExpirationViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
@@ -47,11 +48,19 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
 
         binding.expirationRv.adapter = adapter
+        adapter.onClickListener = {
+            entryClickListener(it)
+        }
     }
 
     private fun observeViewModel() {
         viewModel.entriesLD.observe(this) {
             adapter.setEntries(it)
         }
+    }
+
+    private fun entryClickListener(entry: ExpirationEntryWithProduct) {
+        val dialog = ExpirationMenuDialog(this, entry, viewModel) {}
+        dialog.show(supportFragmentManager, "TaskMenuDialog")
     }
 }

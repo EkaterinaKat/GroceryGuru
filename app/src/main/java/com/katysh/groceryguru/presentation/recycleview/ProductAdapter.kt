@@ -12,6 +12,7 @@ import com.katysh.groceryguru.model.Product
 class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
 
     private var products: List<Product> = ArrayList()
+    var onClickListener: ((Product) -> Unit)? = null
 
     fun setProducts(products: List<Product>) {
         this.products = products
@@ -29,7 +30,9 @@ class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
         holder.textView.text = product.title
-        Log.i("tag7931", "onBindViewHolder $product")
+        holder.itemView.setOnClickListener {
+            onClickListener?.invoke(product)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -38,10 +41,5 @@ class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
 }
 
 class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val textView: TextView
-
-    init {
-        textView = itemView.findViewById(R.id.productTitleTv)
-        Log.i("tag7931", "ProductViewHolder init $textView")
-    }
+    val textView: TextView = itemView.findViewById(R.id.productTitleTv)
 }

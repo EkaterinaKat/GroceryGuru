@@ -29,4 +29,8 @@ class ExpirationRepoImpl @Inject constructor(
     override fun getList(): LiveData<List<ExpirationEntryWithProduct>> {
         return dao.getList()
     }
+
+    override suspend fun getByProductId(id: Int): List<ExpirationEntryWithProduct> {
+        return dao.getByProductId(id)
+    }
 }

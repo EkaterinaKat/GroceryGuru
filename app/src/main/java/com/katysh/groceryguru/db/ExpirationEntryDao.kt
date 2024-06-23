@@ -23,4 +23,6 @@ interface ExpirationEntryDao {
     @Query("DELETE FROM expiration_entry WHERE id=:id")
     suspend fun delete(id: Int)
 
+    @Query("SELECT * FROM expiration_entry WHERE product_id=:id ")
+    suspend fun getByProductId(id: Int): List<ExpirationEntryWithProduct>
 }
