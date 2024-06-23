@@ -1,12 +1,12 @@
 package com.katysh.groceryguru.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityProductsBinding
+import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -48,7 +48,6 @@ class ProductsActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.productsLD.observe(this) {
-            Log.i("tag7931", "viewModel.productsLD.observe(this) $it")
             adapter.setProducts(it)
         }
     }

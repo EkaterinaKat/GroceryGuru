@@ -10,6 +10,6 @@ class ProductsViewModel(
 ) : ViewModel() {
 
     val productsLD: LiveData<List<Product>>
-        get() = productRepo.getList()
+        get() = productRepo.getListLd()
 
 }

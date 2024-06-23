@@ -30,7 +30,7 @@ class ProductEditViewModel(
 
     private fun save(string: String) {
         viewModelScope.launch {
-            val product = Product(0, string)
+            val product = Product(title = string)
             productRepo.add(product)
             _shouldFinishActivityLD.value = Unit
         }

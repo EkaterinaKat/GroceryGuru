@@ -1,4 +1,4 @@
-package com.katysh.groceryguru.presentation
+package com.katysh.groceryguru.presentation.recycleview
 
 import android.util.Log
 import android.view.LayoutInflater

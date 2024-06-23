@@ -13,5 +13,7 @@ interface ProductRepo {
 
     suspend fun getById(id: Int): Product
 
-    fun getList(): LiveData<List<Product>>
+    fun getList(): List<Product>
+
+    fun getListLd(): LiveData<List<Product>>
 }

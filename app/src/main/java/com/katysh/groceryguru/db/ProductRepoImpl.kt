@@ -25,7 +25,11 @@ class ProductRepoImpl @Inject constructor(
         return dao.getById(id)
     }
 
-    override fun getList(): LiveData<List<Product>> {
+    override fun getList(): List<Product> {
         return dao.getList()
+    }
+
+    override fun getListLd(): LiveData<List<Product>> {
+        return dao.getListLd()
     }
 }

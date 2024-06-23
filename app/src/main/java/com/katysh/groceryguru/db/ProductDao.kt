@@ -11,7 +11,10 @@ import com.katysh.groceryguru.model.Product
 interface ProductDao {
 
     @Query("SELECT * FROM product ORDER BY title")
-    fun getList(): LiveData<List<Product>>
+    fun getList(): List<Product>
+
+    @Query("SELECT * FROM product ORDER BY title")
+    fun getListLd(): LiveData<List<Product>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(product: Product)
