@@ -32,3 +32,25 @@ fun parse(year: Int, month: Int, day: Int): Date? {
         throw RuntimeException()
     }
 }
+
+fun daysLeft(expirationDate: Date): Int {
+    return getNumberOfDays(removeTimeFromDate(Date()), removeTimeFromDate(expirationDate)) + 1
+}
+
+/**
+ * @return Число дней между датами. Если даты соседние, то число дней = 1.
+ * Если даты совпадают, то число дней = 0.
+ * Если startDate раньше finishDate, то число положительное и наоборот.
+ */
+fun getNumberOfDays(startDate: Date, finishDate: Date): Int {
+    val diff = finishDate.time - startDate.time
+    return (diff / 86400000).toInt()
+}
+
+fun removeTimeFromDate(date: Date): Date {
+    return try {
+        READABLE_DATE_FORMAT.parse(READABLE_DATE_FORMAT.format(date))
+    } catch (e: ParseException) {
+        throw java.lang.RuntimeException()
+    }
+}
