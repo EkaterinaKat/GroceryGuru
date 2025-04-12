@@ -1,6 +1,7 @@
 package com.katysh.groceryguru.di
 
 import android.app.Application
+import com.katysh.groceryguru.presentation.EntryEditActivity
 import com.katysh.groceryguru.presentation.ExpirationEditActivity
 import com.katysh.groceryguru.presentation.MainActivity
 import com.katysh.groceryguru.presentation.ProductEditActivity
@@ -19,6 +20,8 @@ interface ApplicationComponent {
     fun inject(activity: MainActivity)
 
     fun inject(activity: ExpirationEditActivity)
+
+    fun inject(activity: EntryEditActivity)
 
     @Component.Factory
     interface Factory {

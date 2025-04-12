@@ -10,13 +10,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.katysh.groceryguru.R
-import com.katysh.groceryguru.model.ExpirationEntryWithProduct
-import com.katysh.groceryguru.presentation.viewmodel.ExpirationViewModel
+import com.katysh.groceryguru.model.EntryWithProduct
+import com.katysh.groceryguru.presentation.viewmodel.EntryViewModel
 
-class ExpirationMenuDialog(
+class EntryMenuDialog(
     private val context: AppCompatActivity,
-    private val entry: ExpirationEntryWithProduct,
-    private val viewModel: ExpirationViewModel,
+    private val entryWithProduct: EntryWithProduct,
+    private val viewModel: EntryViewModel,
     private val activityUpdateKnob: () -> Unit
 ) : DialogFragment() {
 
@@ -25,9 +25,9 @@ class ExpirationMenuDialog(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val itemView: View = inflater.inflate(R.layout.dialog_expiration_menu, null)
+        val itemView: View = inflater.inflate(R.layout.dialog_entry_menu, null)
 
-        itemView.findViewById<TextView>(R.id.title_text_view).text = entry.product.title
+        itemView.findViewById<TextView>(R.id.title_text_view).text = entryWithProduct.getInfo()
         itemView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             openDeleteDialog()
         }
@@ -41,7 +41,7 @@ class ExpirationMenuDialog(
     private fun openDeleteDialog() {
         val dlg1: DialogFragment = QuestionDialog("Delete?") {
             if (it) {
-                viewModel.delete(entry.expirationEntry)
+                viewModel.delete(entryWithProduct.entry)
                 dismiss()
             }
         }
