@@ -38,7 +38,13 @@ class ProductEditActivity : AppCompatActivity() {
         observeViewModel()
 
         binding.okButton.setOnClickListener {
-            viewModel.validateAndSave(binding.titleEt.text.toString())
+            viewModel.validateAndSave(
+                binding.titleEt.text.toString(),
+                binding.descEt.text.toString(),
+                binding.proteinEt.text.toString(),
+                binding.fatEt.text.toString(),
+                binding.carbEt.text.toString()
+            )
         }
     }
 

@@ -29,7 +29,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
-        holder.textView.text = product.title
+        holder.textView.text = product.getFullInfo()
         holder.itemView.setOnClickListener {
             onClickListener?.invoke(product)
         }

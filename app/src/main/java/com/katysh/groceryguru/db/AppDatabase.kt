@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.katysh.groceryguru.model.ExpirationEntry
 import com.katysh.groceryguru.model.Product
 
-@Database(entities = [Product::class, ExpirationEntry::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, ExpirationEntry::class], version = 2, exportSchema = false)
 @TypeConverters(value = [DateConverter::class])
 abstract class AppDatabase : RoomDatabase() {
 
@@ -33,7 +33,9 @@ abstract class AppDatabase : RoomDatabase() {
                     application,
                     AppDatabase::class.java,
                     DB_NAME
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = db
                 return db
             }
