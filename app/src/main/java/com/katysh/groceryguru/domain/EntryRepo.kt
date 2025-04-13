@@ -1,8 +1,8 @@
 package com.katysh.groceryguru.domain
 
-import androidx.lifecycle.LiveData
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.EntryWithProduct
+import java.util.Date
 
 interface EntryRepo {
 
@@ -10,5 +10,5 @@ interface EntryRepo {
 
     suspend fun delete(entry: Entry)
 
-    fun getList(): LiveData<List<EntryWithProduct>>
+    suspend fun getListByDate(date: Date): List<EntryWithProduct>
 }

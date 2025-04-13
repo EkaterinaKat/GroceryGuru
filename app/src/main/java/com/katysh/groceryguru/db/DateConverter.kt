@@ -1,6 +1,7 @@
 package com.katysh.groceryguru.db
 
 import androidx.room.TypeConverter
+import com.katysh.groceryguru.util.removeTimeFromDate
 import java.util.Date
 
 class DateConverter {
@@ -11,6 +12,6 @@ class DateConverter {
 
     @TypeConverter
     fun toTimestamp(date: Date?): Long? {
-        return date?.time
+        return date?.let { removeTimeFromDate(date).time }
     }
 }

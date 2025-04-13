@@ -29,7 +29,10 @@ class EntryEditViewModel(
         get() = productRepo.getListLd()
 
     fun validateAndSave(product: Product?, weight: String?, year: Int?, month: Int?, day: Int?) {
-        if (product == null || weight == null || year == null || month == null || day == null) {
+        if (product == null
+            || weight == null || weight.trim().isEmpty()
+            || year == null || month == null || day == null
+        ) {
             _errorLD.value = Unit
         } else {
 
@@ -51,7 +54,7 @@ class EntryEditViewModel(
 
     private fun convertToDate(year: Int, month: Int, dayOfMonth: Int): Date {
         val calendar = Calendar.getInstance()
-        calendar.set(year, month - 1, dayOfMonth)
+        calendar.set(year, month, dayOfMonth)
         return calendar.time
     }
 }

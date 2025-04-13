@@ -16,6 +16,6 @@ data class EntryWithProduct(
 ) {
 
     fun getInfo(): String {
-        return getDateString(entry.date) + " " + product.title + " " + entry.weight + " "
+        return product.title + " " + entry.weight + " "
     }
 }

@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.katysh.groceryguru.R
 import com.katysh.groceryguru.model.EntryWithProduct
-import com.katysh.groceryguru.presentation.viewmodel.EntryViewModel
+import com.katysh.groceryguru.presentation.viewmodel.MainActivityViewModel
 
 class EntryMenuDialog(
     private val context: AppCompatActivity,
     private val entryWithProduct: EntryWithProduct,
-    private val viewModel: EntryViewModel,
+    private val viewModel: MainActivityViewModel,
     private val activityUpdateKnob: () -> Unit
 ) : DialogFragment() {
 

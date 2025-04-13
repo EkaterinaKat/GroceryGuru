@@ -1,9 +1,10 @@
 package com.katysh.groceryguru.db
 
-import androidx.lifecycle.LiveData
 import com.katysh.groceryguru.domain.EntryRepo
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.EntryWithProduct
+import com.katysh.groceryguru.util.removeTimeFromDate
+import java.util.Date
 import javax.inject.Inject
 
 class EntryRepoImpl @Inject constructor(
@@ -18,9 +19,7 @@ class EntryRepoImpl @Inject constructor(
         dao.delete(entry.id)
     }
 
-    override fun getList(): LiveData<List<EntryWithProduct>> {
-        return dao.getList()
+    override suspend fun getListByDate(date: Date): List<EntryWithProduct> {
+        return dao.getEntriesByDate(removeTimeFromDate(date))
     }
-
-
 }

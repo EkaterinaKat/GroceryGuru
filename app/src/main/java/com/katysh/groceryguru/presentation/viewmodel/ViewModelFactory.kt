@@ -24,8 +24,8 @@ class ViewModelFactory @Inject constructor(
         if (modelClass == ExpirationEditViewModel::class.java) {
             return ExpirationEditViewModel(productRepo, expirationRepo) as T
         }
-        if (modelClass == EntryViewModel::class.java) {
-            return EntryViewModel(entryRepo) as T
+        if (modelClass == MainActivityViewModel::class.java) {
+            return MainActivityViewModel(entryRepo) as T
         }
         if (modelClass == EntryEditViewModel::class.java) {
             return EntryEditViewModel(productRepo, entryRepo) as T

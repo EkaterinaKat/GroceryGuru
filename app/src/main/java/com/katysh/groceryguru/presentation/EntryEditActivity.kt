@@ -65,7 +65,6 @@ class EntryEditActivity : AppCompatActivity() {
         )
     }
 
-
     companion object {
 
         fun newIntent(context: Context): Intent {
