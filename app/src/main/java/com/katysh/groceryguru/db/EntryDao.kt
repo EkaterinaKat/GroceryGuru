@@ -18,7 +18,7 @@ interface EntryDao {
     suspend fun delete(id: Int)
 
     @Query("SELECT * FROM entry ")
-    suspend fun getList(): List<EntryWithProduct>
+    fun getList(): List<Entry>
 
     @Query("SELECT * FROM entry WHERE entry_date = :date")
     suspend fun getEntriesByDate(date: Date): List<EntryWithProduct>

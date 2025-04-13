@@ -4,14 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.katysh.groceryguru.domain.BackupRepo
 import com.katysh.groceryguru.domain.ExpirationRepo
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Product
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductsViewModel(
     private val productRepo: ProductRepo,
-    private val expirationRepo: ExpirationRepo
+    private val expirationRepo: ExpirationRepo,
+    private val backupRepo: BackupRepo
 ) : ViewModel() {
 
     val productsLD: LiveData<List<Product>>
@@ -20,6 +24,10 @@ class ProductsViewModel(
     private val _errorLD = MutableLiveData<Unit>()
     val errorLD: LiveData<Unit>
         get() = _errorLD
+
+    private val _backupLD = MutableLiveData<String>()
+    val backupLD: LiveData<String>
+        get() = _backupLD
 
     fun delete(product: Product) {
         viewModelScope.launch {
@@ -31,4 +39,12 @@ class ProductsViewModel(
         }
     }
 
+    fun backup() {
+        viewModelScope.launch {
+            _backupLD.value = withContext(Dispatchers.Default) {
+                backupRepo.getBackup()
+            }
+        }
+
+    }
 }

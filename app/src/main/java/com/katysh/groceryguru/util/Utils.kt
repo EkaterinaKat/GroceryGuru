@@ -1,5 +1,7 @@
 package com.katysh.groceryguru.util
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.view.View
 import android.widget.AdapterView
@@ -37,4 +39,10 @@ fun <T> selectSpinnerItemByValue(spinner: Spinner, value: T) {
             return
         }
     }
+}
+
+fun copyToClipboard(context: Context, text: String?) {
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText("label", text)
+    clipboard.setPrimaryClip(clip)
 }

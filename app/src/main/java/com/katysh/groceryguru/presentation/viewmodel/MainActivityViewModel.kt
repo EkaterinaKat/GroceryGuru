@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.katysh.groceryguru.domain.CalculationRepo
 import com.katysh.groceryguru.domain.EntryRepo
+import com.katysh.groceryguru.logic.DayResult
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.util.TimeUnit
@@ -13,11 +15,9 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class MainActivityViewModel(
-    private val entryRepo: EntryRepo
+    private val entryRepo: EntryRepo,
+    private val calculationRepo: CalculationRepo
 ) : ViewModel() {
-
-//    val entriesLD: LiveData<List<EntryWithProduct>>
-//        get() = entryRepo.getList()
 
     private val _dateLD = MutableLiveData<Date>()
     val dateLD: LiveData<Date>
@@ -26,6 +26,10 @@ class MainActivityViewModel(
     private val _entriesLD = MutableLiveData<List<EntryWithProduct>>()
     val entriesLD: LiveData<List<EntryWithProduct>>
         get() = _entriesLD
+
+    private val _dayResultLD = MutableLiveData<DayResult>()
+    val dayResultLD: LiveData<DayResult>
+        get() = _dayResultLD
 
     init {
         setDate(Date())
@@ -56,6 +60,7 @@ class MainActivityViewModel(
         _dateLD.value?.let {
             viewModelScope.launch {
                 _entriesLD.value = entryRepo.getListByDate(it)
+                _dayResultLD.value = calculationRepo.getDayResult(it)
             }
         }
     }

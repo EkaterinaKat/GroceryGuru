@@ -8,9 +8,13 @@ import com.katysh.groceryguru.db.ExpirationEntryDao
 import com.katysh.groceryguru.db.ExpirationRepoImpl
 import com.katysh.groceryguru.db.ProductDao
 import com.katysh.groceryguru.db.ProductRepoImpl
+import com.katysh.groceryguru.domain.BackupRepo
+import com.katysh.groceryguru.domain.CalculationRepo
 import com.katysh.groceryguru.domain.EntryRepo
 import com.katysh.groceryguru.domain.ExpirationRepo
 import com.katysh.groceryguru.domain.ProductRepo
+import com.katysh.groceryguru.logic.BackupRepoImpl
+import com.katysh.groceryguru.logic.CalculationRepoImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -26,6 +30,12 @@ interface AppModule {
 
     @Binds
     fun bindEntryRepo(impl: EntryRepoImpl): EntryRepo
+
+    @Binds
+    fun bindCalculationRepo(impl: CalculationRepoImpl): CalculationRepo
+
+    @Binds
+    fun bindBackupRepo(impl: BackupRepoImpl): BackupRepo
 
     companion object {
 

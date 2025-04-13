@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         observeViewModel()
 
-        binding.expirationRv.adapter = adapter
+        binding.entryRv.adapter = adapter
         adapter.onClickListener = {
             entryClickListener(it)
         }
@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity() {
         binding.mainDateTextView.setOnClickListener { openDatePicker() }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         viewModel.updateEntriesList()
     }
 
@@ -79,6 +79,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.dateLD.observe(this) {
             binding.mainDateTextView.text = getDateStringWithWeekDay(it)
             setDateViewStyle(it)
+        }
+        viewModel.dayResultLD.observe(this) {
+            binding.gridTv11.text = it.proteinTotal.toString()
+            binding.gridTv12.text = it.fatTotal.toString()
+            binding.gridTv13.text = it.carbonTotal.toString()
         }
     }
 
