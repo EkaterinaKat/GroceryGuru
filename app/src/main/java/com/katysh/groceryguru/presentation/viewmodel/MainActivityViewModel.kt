@@ -8,6 +8,7 @@ import com.katysh.groceryguru.domain.CalculationRepo
 import com.katysh.groceryguru.domain.EntryRepo
 import com.katysh.groceryguru.domain.ReportRepo
 import com.katysh.groceryguru.logic.DayResult
+import com.katysh.groceryguru.logic.ReportTable
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.util.TimeUnit
@@ -32,6 +33,10 @@ class MainActivityViewModel(
     private val _dayResultLD = MutableLiveData<DayResult>()
     val dayResultLD: LiveData<DayResult>
         get() = _dayResultLD
+
+    private val _reportLD = MutableLiveData<ReportTable>()
+    val reportLD: LiveData<ReportTable>
+        get() = _reportLD
 
     init {
         setDate(Date())
@@ -63,6 +68,7 @@ class MainActivityViewModel(
             viewModelScope.launch {
                 _entriesLD.value = entryRepo.getListByDate(it)
                 _dayResultLD.value = calculationRepo.getDayResult(it)
+                _reportLD.value = reportRepo.getReport(it)
             }
         }
     }

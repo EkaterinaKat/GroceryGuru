@@ -2,7 +2,6 @@ package com.katysh.groceryguru.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.katysh.groceryguru.util.getDateString
 
 data class EntryWithProduct(
     @Embedded
@@ -17,5 +16,9 @@ data class EntryWithProduct(
 
     fun getInfo(): String {
         return product.title + " " + entry.weight + " "
+    }
+
+    fun getInfoForReport(): String {
+        return "${product.title} ${entry.weight}\n${product.proteins} ${product.fats} ${product.carbohydrates}"
     }
 }

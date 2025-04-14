@@ -25,10 +25,10 @@ class ReportRepoImpl @Inject constructor(
 
             table.add(
                 listOf(
-                    entry.product.getInfoForReport(),
-                    protein.toString(),
-                    fat.toString(),
-                    carbs.toString(),
+                    entry.getInfoForReport(),
+                    formatNum(protein),
+                    formatNum(fat),
+                    formatNum(carbs)
                 )
             )
 
@@ -40,9 +40,9 @@ class ReportRepoImpl @Inject constructor(
         table.add(
             listOf(
                 "Total",
-                proteinTotal.toString(),
-                fatTotal.toString(),
-                carbTotal.toString(),
+                formatNum(proteinTotal),
+                formatNum(fatTotal),
+                formatNum(carbTotal)
             )
         )
 
@@ -58,13 +58,17 @@ class ReportRepoImpl @Inject constructor(
         table.add(
             listOf(
                 "Left",
-                (PROTEIN_NORM - proteinTotal).toString(),
-                (FATS_NORM - fatTotal).toString(),
-                (CARBS_NORM - carbTotal).toString()
+                formatNum(PROTEIN_NORM - proteinTotal),
+                formatNum(FATS_NORM - fatTotal),
+                formatNum(CARBS_NORM - carbTotal)
             )
         )
 
         return ReportTable(table)
+    }
+
+    private fun formatNum(num: Float): String {
+        return String.format("%.0f", num)
     }
 
     companion object {

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.katysh.groceryguru.R
 import com.katysh.groceryguru.databinding.ActivityMainBinding
 import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.presentation.recycleview.EntryAdapter
+import com.katysh.groceryguru.presentation.recycleview.ReportAdapter
 import com.katysh.groceryguru.presentation.viewmodel.MainActivityViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
 import com.katysh.groceryguru.util.equalsIgnoreTime
@@ -56,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
         observeViewModel()
 
-        binding.entryRv.adapter = adapter
         adapter.onClickListener = {
             entryClickListener(it)
         }
@@ -73,17 +74,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.entriesLD.observe(this) {
-            adapter.setEntries(it)
-        }
         viewModel.dateLD.observe(this) {
             binding.mainDateTextView.text = getDateStringWithWeekDay(it)
             setDateViewStyle(it)
         }
-        viewModel.dayResultLD.observe(this) {
-            binding.gridTv11.text = it.proteinTotal.toString()
-            binding.gridTv12.text = it.fatTotal.toString()
-            binding.gridTv13.text = it.carbonTotal.toString()
+        viewModel.reportLD.observe(this) {
+
+            val adapter = ReportAdapter(this, it.table)
+            binding.gridView.adapter = adapter
+
+            binding.gridView.setOnItemClickListener { _, view, position, _ ->
+                Toast.makeText(this, "Clicked: ${it.table[position]}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

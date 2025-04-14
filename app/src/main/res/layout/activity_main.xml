@@ -40,87 +40,17 @@
             android:text="+" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/entryRv"
+    <GridView
+        android:id="@+id/gridView"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_below="@id/topElementsLayout"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/calculationsLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topElementsLayout" />
-
-    <GridLayout
-        android:id="@+id/calculationsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/dateChangeButtonsLayout"
-        android:columnCount="3"
-        app:layout_constraintBottom_toTopOf="@id/dateChangeButtonsLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Б" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Ж" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="У" />
-
-        <TextView
-            android:id="@+id/gridTv11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="11" />
-
-        <TextView
-            android:id="@+id/gridTv12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="12" />
-
-        <TextView
-            android:id="@+id/gridTv13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="13" />
-
-        <TextView
-            android:id="@+id/gridTv21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="-" />
-
-        <TextView
-            android:id="@+id/gridTv22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="-" />
-
-        <TextView
-            android:id="@+id/gridTv23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="-" />
-    </GridLayout>
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/dateChangeButtonsLayout"
+        app:layout_constraintTop_toBottomOf="@+id/topElementsLayout" />
 
     <LinearLayout
         android:id="@+id/dateChangeButtonsLayout"
