@@ -21,6 +21,10 @@ data class Product(
     fun getFullInfo(): String {
         return "$title\n$desc\nБ $proteins Ж $fats У $carbohydrates"
     }
+
+    fun getInfoForReport(): String {
+        return "$title\n$proteins $fats $carbohydrates"
+    }
 }
 
 

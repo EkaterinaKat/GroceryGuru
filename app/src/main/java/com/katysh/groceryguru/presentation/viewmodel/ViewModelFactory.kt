@@ -7,6 +7,7 @@ import com.katysh.groceryguru.domain.CalculationRepo
 import com.katysh.groceryguru.domain.EntryRepo
 import com.katysh.groceryguru.domain.ExpirationRepo
 import com.katysh.groceryguru.domain.ProductRepo
+import com.katysh.groceryguru.domain.ReportRepo
 import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(
@@ -14,7 +15,8 @@ class ViewModelFactory @Inject constructor(
     private val expirationRepo: ExpirationRepo,
     private val entryRepo: EntryRepo,
     private val calculationRepo: CalculationRepo,
-    private val backupRepo: BackupRepo
+    private val backupRepo: BackupRepo,
+    private val reportRepo: ReportRepo
 ) : ViewModelProvider.Factory {
 
 
@@ -29,7 +31,7 @@ class ViewModelFactory @Inject constructor(
             return ExpirationEditViewModel(productRepo, expirationRepo) as T
         }
         if (modelClass == MainActivityViewModel::class.java) {
-            return MainActivityViewModel(entryRepo, calculationRepo) as T
+            return MainActivityViewModel(entryRepo, calculationRepo, reportRepo) as T
         }
         if (modelClass == EntryEditViewModel::class.java) {
             return EntryEditViewModel(productRepo, entryRepo) as T

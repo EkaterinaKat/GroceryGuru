@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katysh.groceryguru.domain.CalculationRepo
 import com.katysh.groceryguru.domain.EntryRepo
+import com.katysh.groceryguru.domain.ReportRepo
 import com.katysh.groceryguru.logic.DayResult
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.EntryWithProduct
@@ -16,7 +17,8 @@ import java.util.Date
 
 class MainActivityViewModel(
     private val entryRepo: EntryRepo,
-    private val calculationRepo: CalculationRepo
+    private val calculationRepo: CalculationRepo,
+    private val reportRepo: ReportRepo
 ) : ViewModel() {
 
     private val _dateLD = MutableLiveData<Date>()

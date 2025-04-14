@@ -13,8 +13,10 @@ import com.katysh.groceryguru.domain.CalculationRepo
 import com.katysh.groceryguru.domain.EntryRepo
 import com.katysh.groceryguru.domain.ExpirationRepo
 import com.katysh.groceryguru.domain.ProductRepo
+import com.katysh.groceryguru.domain.ReportRepo
 import com.katysh.groceryguru.logic.BackupRepoImpl
 import com.katysh.groceryguru.logic.CalculationRepoImpl
+import com.katysh.groceryguru.logic.ReportRepoImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -36,6 +38,9 @@ interface AppModule {
 
     @Binds
     fun bindBackupRepo(impl: BackupRepoImpl): BackupRepo
+
+    @Binds
+    fun bindReportRepo(impl: ReportRepoImpl): ReportRepo
 
     companion object {
 
