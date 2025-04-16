@@ -25,6 +25,7 @@ class EntryEditViewModel(
     val shouldFinishActivityLD: LiveData<Unit>
         get() = _shouldFinishActivityLD
 
+    //todo ненужно
     val productsLD: LiveData<List<Product>>
         get() = productRepo.getListLd()
 

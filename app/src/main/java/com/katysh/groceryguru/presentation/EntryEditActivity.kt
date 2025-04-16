@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
@@ -11,10 +13,13 @@ import com.katysh.groceryguru.databinding.ActivityEntryEditBinding
 import com.katysh.groceryguru.model.Product
 import com.katysh.groceryguru.presentation.viewmodel.EntryEditViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
-import com.katysh.groceryguru.util.adjustSpinner
 import javax.inject.Inject
 
+
 class EntryEditActivity : AppCompatActivity() {
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private var product: Product? = null
+
     private val binding by lazy {
         ActivityEntryEditBinding.inflate(layoutInflater)
     }
@@ -35,18 +40,23 @@ class EntryEditActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         component.inject(this)
-
         observeViewModel()
 
         binding.okButton.setOnClickListener { save() }
+        binding.productTv.setOnClickListener { onProductTvClickListener() }
 
-        observeViewModel()
+        resultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val product = result.data?.getParcelableExtra<Product>(PRODUCT_RESULT_KEY)
+                setProduct(product)
+            }
+        }
+
     }
 
     private fun observeViewModel() {
-        viewModel.productsLD.observe(this) {
-            adjustSpinner(this, binding.spinner, it, null)
-        }
         viewModel.errorLD.observe(this) {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
         }
@@ -55,9 +65,13 @@ class EntryEditActivity : AppCompatActivity() {
         }
     }
 
+    private fun onProductTvClickListener() {
+        resultLauncher.launch(Intent(this, SelectProductActivity::class.java))
+    }
+
     private fun save() {
         viewModel.validateAndSave(
-            binding.spinner.selectedItem as Product,
+            product,
             binding.weightEt.text.toString(),
             binding.datePicker.year,
             binding.datePicker.month,
@@ -65,7 +79,13 @@ class EntryEditActivity : AppCompatActivity() {
         )
     }
 
+    private fun setProduct(product: Product?) {
+        this.product = product
+        binding.productTv.text = product?.getFullInfo() ?: "null"
+    }
+
     companion object {
+        const val PRODUCT_RESULT_KEY = "product_result_key"
 
         fun newIntent(context: Context): Intent {
             return Intent(context, EntryEditActivity::class.java)

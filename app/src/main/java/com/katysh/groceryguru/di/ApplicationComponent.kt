@@ -6,6 +6,7 @@ import com.katysh.groceryguru.presentation.ExpirationEditActivity
 import com.katysh.groceryguru.presentation.MainActivity
 import com.katysh.groceryguru.presentation.ProductEditActivity
 import com.katysh.groceryguru.presentation.ProductsActivity
+import com.katysh.groceryguru.presentation.SelectProductActivity
 import dagger.BindsInstance
 import dagger.Component
 
@@ -22,6 +23,8 @@ interface ApplicationComponent {
     fun inject(activity: ExpirationEditActivity)
 
     fun inject(activity: EntryEditActivity)
+
+    fun inject(activity: SelectProductActivity)
 
     @Component.Factory
     interface Factory {
