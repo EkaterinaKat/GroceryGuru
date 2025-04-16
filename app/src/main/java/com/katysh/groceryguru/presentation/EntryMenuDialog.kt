@@ -31,9 +31,6 @@ class EntryMenuDialog(
         itemView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             openDeleteDialog()
         }
-        itemView.findViewById<View>(R.id.edit_task_button).setOnClickListener {
-            //todo
-        }
 
         return itemView
     }

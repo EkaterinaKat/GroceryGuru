@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -12,7 +13,8 @@
         android:layout_margin="10dp"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:text="Курица 100" />
 
     <Button
         android:id="@+id/delete_button"
@@ -20,12 +22,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/delete" />
-
-    <Button
-        android:id="@+id/edit_task_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/edit" />
 
 </LinearLayout>
