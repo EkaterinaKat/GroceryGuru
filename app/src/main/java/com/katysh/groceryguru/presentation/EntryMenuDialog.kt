@@ -27,7 +27,7 @@ class EntryMenuDialog(
     ): View {
         val itemView: View = inflater.inflate(R.layout.dialog_entry_menu, null)
 
-        itemView.findViewById<TextView>(R.id.title_text_view).text = entryWithProduct.getInfo()
+        itemView.findViewById<TextView>(R.id.title_text_view).text = entryWithProduct.product.getFullInfo()
         itemView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             openDeleteDialog()
         }

@@ -22,7 +22,11 @@ data class Product(
     }
 
     fun getFullInfo(): String {
-        return "$title\n$desc\nБ $proteins Ж $fats У $carbohydrates"
+        return "$title\n$desc\n${getNutrientsInfo()}"
+    }
+
+    private fun getNutrientsInfo(): String {
+        return "$proteins - $fats - $carbohydrates"
     }
 }
 

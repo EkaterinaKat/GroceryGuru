@@ -25,11 +25,12 @@ class ReportRepoImpl @Inject constructor(
             val fat = entry.product.fats!!.toFloat() * entry.entry.weight / 100
             val carbs = entry.product.carbohydrates!!.toFloat() * entry.entry.weight / 100
 
+            val text = "${entry.product.title} ${entry.entry.weight}"
 
             entryLines.add(
                 ReportLine(
                     content = listOf(
-                        entry.getInfoForReport(),
+                        text,
                         formatNum(protein),
                         formatNum(fat),
                         formatNum(carbs)

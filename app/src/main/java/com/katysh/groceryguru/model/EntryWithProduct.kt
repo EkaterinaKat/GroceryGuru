@@ -17,8 +17,4 @@ data class EntryWithProduct(
     fun getInfo(): String {
         return product.title + " " + entry.weight + " "
     }
-
-    fun getInfoForReport(): String {
-        return "${product.title} ${entry.weight}\n${product.proteins} ${product.fats} ${product.carbohydrates}"
-    }
 }
