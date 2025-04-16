@@ -4,16 +4,16 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.R
 import com.katysh.groceryguru.databinding.ActivityMainBinding
-import com.katysh.groceryguru.model.EntryWithProduct
-import com.katysh.groceryguru.presentation.recycleview.EntryAdapter
 import com.katysh.groceryguru.presentation.recycleview.ReportAdapter
 import com.katysh.groceryguru.presentation.viewmodel.MainActivityViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
     }
 
-    private val adapter = EntryAdapter()
+    private val reportAdapter = ReportAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,14 +58,16 @@ class MainActivity : AppCompatActivity() {
 
         observeViewModel()
 
-        adapter.onClickListener = {
-            entryClickListener(it)
-        }
-
         binding.prevButton.setOnClickListener { viewModel.prevDate() }
         binding.nextButton.setOnClickListener { viewModel.nextDate() }
 
         binding.mainDateTextView.setOnClickListener { openDatePicker() }
+
+        reportAdapter.onClickListener = {
+            Toast.makeText(this, "Clicked: $it", Toast.LENGTH_SHORT).show()
+        }
+        binding.reportRv.layoutManager = LinearLayoutManager(this)
+        binding.reportRv.adapter = reportAdapter
     }
 
     override fun onResume() {
@@ -79,20 +81,16 @@ class MainActivity : AppCompatActivity() {
             setDateViewStyle(it)
         }
         viewModel.reportLD.observe(this) {
-
-            val adapter = ReportAdapter(this, it.table)
-            binding.gridView.adapter = adapter
-
-            binding.gridView.setOnItemClickListener { _, view, position, _ ->
-                Toast.makeText(this, "Clicked: ${it.table[position]}", Toast.LENGTH_SHORT).show()
-            }
+            Log.i("tag984521", "viewModel.reportLD.observe(this)")
+            reportAdapter.setReportTable(it)
         }
     }
 
-    private fun entryClickListener(entry: EntryWithProduct) {
-        val dialog = EntryMenuDialog(this, entry, viewModel) {}
-        dialog.show(supportFragmentManager, "TaskMenuDialog")
-    }
+    //todo
+//    private fun entryClickListener(entry: EntryWithProduct) {
+//        val dialog = EntryMenuDialog(this, entry, viewModel) {}
+//        dialog.show(supportFragmentManager, "TaskMenuDialog")
+//    }
 
     private fun setDateViewStyle(date: Date) {
         if (equalsIgnoreTime(date, Date())) {

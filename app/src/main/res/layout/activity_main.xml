@@ -40,15 +40,10 @@
             android:text="+" />
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/gridView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reportRv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:horizontalSpacing="5dp"
-        android:numColumns="4"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="20dp"
         app:layout_constraintBottom_toTopOf="@+id/dateChangeButtonsLayout"
         app:layout_constraintTop_toBottomOf="@+id/topElementsLayout" />
 

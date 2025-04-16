@@ -3,7 +3,6 @@ package com.katysh.groceryguru.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.domain.BackupRepo
-import com.katysh.groceryguru.domain.CalculationRepo
 import com.katysh.groceryguru.domain.EntryRepo
 import com.katysh.groceryguru.domain.ExpirationRepo
 import com.katysh.groceryguru.domain.ProductRepo
@@ -14,7 +13,6 @@ class ViewModelFactory @Inject constructor(
     private val productRepo: ProductRepo,
     private val expirationRepo: ExpirationRepo,
     private val entryRepo: EntryRepo,
-    private val calculationRepo: CalculationRepo,
     private val backupRepo: BackupRepo,
     private val reportRepo: ReportRepo
 ) : ViewModelProvider.Factory {
@@ -31,7 +29,7 @@ class ViewModelFactory @Inject constructor(
             return ExpirationEditViewModel(productRepo, expirationRepo) as T
         }
         if (modelClass == MainActivityViewModel::class.java) {
-            return MainActivityViewModel(entryRepo, calculationRepo, reportRepo) as T
+            return MainActivityViewModel(entryRepo, reportRepo) as T
         }
         if (modelClass == EntryEditViewModel::class.java) {
             return EntryEditViewModel(productRepo, entryRepo) as T

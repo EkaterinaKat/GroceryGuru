@@ -15,19 +15,20 @@ class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
     var onClickListener: ((Product) -> Unit)? = null
 
     fun setProducts(products: List<Product>) {
+        Log.i("tag984521", "setProducts")
         this.products = products
         notifyDataSetChanged()
-
-        Log.i("tag7931", "setProducts $products")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        Log.i("tag984521", "onCreateViewHolder")
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.product_item, parent, false)
         return ProductViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        Log.i("tag984521", "onBindViewHolder")
         val product = products[position]
         holder.textView.text = product.getFullInfo()
         holder.itemView.setOnClickListener {
@@ -36,6 +37,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
     }
 
     override fun getItemCount(): Int {
+        Log.i("tag984521", "getItemCount")
         return products.size
     }
 }
