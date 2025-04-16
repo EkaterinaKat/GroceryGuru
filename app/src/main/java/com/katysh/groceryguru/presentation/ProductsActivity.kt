@@ -51,7 +51,7 @@ class ProductsActivity : AppCompatActivity() {
             productClickListener(it)
         }
 
-        binding.backupButton.setOnClickListener { viewModel.backup() }
+//        binding.backupButton.setOnClickListener { viewModel.backup() }
     }
 
     private fun observeViewModel() {

@@ -1,5 +1,6 @@
 package com.katysh.groceryguru.logic
 
+import com.katysh.groceryguru.R
 import com.katysh.groceryguru.db.EntryDao
 import com.katysh.groceryguru.domain.ReportRepo
 import java.util.Date
@@ -10,8 +11,9 @@ class ReportRepoImpl @Inject constructor(
 ) : ReportRepo {
 
     override suspend fun getReport(date: Date): ReportTable {
-        val table = mutableListOf<List<String>>()
-        table.add(listOf("", "Б", "Ж", "У"))
+        val table = mutableListOf<ReportLine>()
+        table.add(ReportLine(content = listOf("", "Б", "Ж", "У")))
+        val entryLines = mutableListOf<ReportLine>()
 
         val entries = dao.getEntriesByDate(date)
         var proteinTotal = 0f
@@ -23,12 +25,16 @@ class ReportRepoImpl @Inject constructor(
             val fat = entry.product.fats!!.toFloat() * entry.entry.weight / 100
             val carbs = entry.product.carbohydrates!!.toFloat() * entry.entry.weight / 100
 
-            table.add(
-                listOf(
-                    entry.getInfoForReport(),
-                    formatNum(protein),
-                    formatNum(fat),
-                    formatNum(carbs)
+
+            entryLines.add(
+                ReportLine(
+                    content = listOf(
+                        entry.getInfoForReport(),
+                        formatNum(protein),
+                        formatNum(fat),
+                        formatNum(carbs)
+                    ),
+                    entry = entry
                 )
             )
 
@@ -38,31 +44,42 @@ class ReportRepoImpl @Inject constructor(
         }
 
         table.add(
-            listOf(
-                "Total",
-                formatNum(proteinTotal),
-                formatNum(fatTotal),
-                formatNum(carbTotal)
+            ReportLine(
+                content = listOf(
+                    "Total",
+                    formatNum(proteinTotal),
+                    formatNum(fatTotal),
+                    formatNum(carbTotal)
+                ),
+                color = R.color.blue
             )
         )
 
         table.add(
-            listOf(
-                "Norm",
-                PROTEIN_NORM.toString(),
-                FATS_NORM.toString(),
-                CARBS_NORM.toString(),
+            ReportLine(
+                content = listOf(
+                    "Norm",
+                    PROTEIN_NORM.toString(),
+                    FATS_NORM.toString(),
+                    CARBS_NORM.toString(),
+                ),
+                color = R.color.grey
             )
         )
 
         table.add(
-            listOf(
-                "Left",
-                formatNum(PROTEIN_NORM - proteinTotal),
-                formatNum(FATS_NORM - fatTotal),
-                formatNum(CARBS_NORM - carbTotal)
+            ReportLine(
+                content = listOf(
+                    "Left",
+                    formatNum(PROTEIN_NORM - proteinTotal),
+                    formatNum(FATS_NORM - fatTotal),
+                    formatNum(CARBS_NORM - carbTotal)
+                ),
+                color = R.color.creamy
             )
         )
+
+        table.addAll(entryLines)
 
         return ReportTable(table)
     }

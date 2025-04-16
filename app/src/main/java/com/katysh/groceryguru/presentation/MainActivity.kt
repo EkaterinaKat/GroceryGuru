@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.R
 import com.katysh.groceryguru.databinding.ActivityMainBinding
+import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.presentation.recycleview.ReportAdapter
 import com.katysh.groceryguru.presentation.viewmodel.MainActivityViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
     }
 
-    private val reportAdapter = ReportAdapter()
+    private val reportAdapter = ReportAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +64,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainDateTextView.setOnClickListener { openDatePicker() }
 
-        reportAdapter.onClickListener = {
-            Toast.makeText(this, "Clicked: $it", Toast.LENGTH_SHORT).show()
-        }
+        reportAdapter.onClickListener = { entryClickListener(it) }
         binding.reportRv.layoutManager = LinearLayoutManager(this)
         binding.reportRv.adapter = reportAdapter
     }
@@ -86,11 +85,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //todo
-//    private fun entryClickListener(entry: EntryWithProduct) {
-//        val dialog = EntryMenuDialog(this, entry, viewModel) {}
-//        dialog.show(supportFragmentManager, "TaskMenuDialog")
-//    }
+    private fun entryClickListener(entry: EntryWithProduct) {
+        val dialog = EntryMenuDialog(this, entry, viewModel) {}
+        dialog.show(supportFragmentManager, "TaskMenuDialog")
+    }
 
     private fun setDateViewStyle(date: Date) {
         if (equalsIgnoreTime(date, Date())) {

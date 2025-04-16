@@ -1,5 +1,6 @@
 package com.katysh.groceryguru.presentation.recycleview
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.katysh.groceryguru.R
 import com.katysh.groceryguru.logic.ReportTable
+import com.katysh.groceryguru.model.EntryWithProduct
 
-class ReportAdapter : RecyclerView.Adapter<ReportViewHolder>() {
+class ReportAdapter(
+    val context: Context
+) : RecyclerView.Adapter<ReportViewHolder>() {
 
     private var reportTable: ReportTable = ReportTable(listOf())
-    var onClickListener: ((String) -> Unit)? = null
+    var onClickListener: ((EntryWithProduct) -> Unit)? = null
 
     fun setReportTable(reportTable: ReportTable) {
         Log.i("tag984521", "setReportTable ${reportTable.table.size}")
@@ -31,13 +35,18 @@ class ReportAdapter : RecyclerView.Adapter<ReportViewHolder>() {
     override fun onBindViewHolder(holder: ReportViewHolder, position: Int) {
         Log.i("tag984521", "onBindViewHolder")
         val line = reportTable.table[position]
-        holder.productTv.text = line[0]
-        holder.proteinTv.text = line[1]
-        holder.fatsTv.text = line[2]
-        holder.carbsTv.text = line[3]
+        holder.productTv.text = line.content[0]
+        holder.proteinTv.text = line.content[1]
+        holder.fatsTv.text = line.content[2]
+        holder.carbsTv.text = line.content[3]
         holder.itemView.setOnClickListener {
-            onClickListener?.invoke(line[0])
+            line.entry?.let {
+                onClickListener?.invoke(it)
+            }
         }
+
+        val color:Int = context.resources.getColor(line.color?:R.color.white)
+        holder.itemView.setBackgroundColor(color)
     }
 
     override fun getItemCount(): Int {
