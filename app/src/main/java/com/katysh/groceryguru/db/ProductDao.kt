@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.katysh.groceryguru.model.Product
 
 @Dao
@@ -16,8 +17,11 @@ interface ProductDao {
     @Query("SELECT * FROM product ORDER BY title")
     fun getListLd(): LiveData<List<Product>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun add(product: Product)
+
+    @Update
+    suspend fun update(product: Product): Int
 
     @Query("DELETE FROM product WHERE id=:id")
     suspend fun delete(id: Int)

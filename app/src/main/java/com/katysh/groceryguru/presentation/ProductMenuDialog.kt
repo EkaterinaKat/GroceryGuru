@@ -32,7 +32,7 @@ class ProductMenuDialog(
             openDeleteDialog()
         }
         itemView.findViewById<View>(R.id.edit_task_button).setOnClickListener {
-            //todo
+            startActivity(ProductEditActivity.newIntent(context, product))
         }
 
         return itemView

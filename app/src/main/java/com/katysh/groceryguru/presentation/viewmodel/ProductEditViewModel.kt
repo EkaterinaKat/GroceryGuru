@@ -20,7 +20,10 @@ class ProductEditViewModel(
     val shouldFinishActivityLD: LiveData<Unit>
         get() = _shouldFinishActivityLD
 
-    fun validateAndSave(title: String?, desc: String?, pr: String?, fat: String?, carb: String?) {
+    fun validateAndSave(
+        product: Product?, title: String?, desc: String?,
+        pr: String?, fat: String?, carb: String?
+    ) {
         if (title == null || title.trim().isEmpty()
             || pr == null || pr.trim().isEmpty()
             || fat == null || fat.trim().isEmpty()
@@ -28,15 +31,39 @@ class ProductEditViewModel(
         ) {
             _errorLD.value = Unit
         } else {
-            save(title, desc, pr.toInt(), fat.toInt(), carb.toInt())
+            save(product, title, desc, pr.toInt(), fat.toInt(), carb.toInt())
         }
     }
 
-    private fun save(title: String, desc: String?, pr: Int, fat: Int, carb: Int) {
+    private fun save(
+        product: Product?,
+        title: String,
+        desc: String?,
+        pr: Int,
+        fat: Int,
+        carb: Int
+    ) {
         viewModelScope.launch {
-            val product =
-                Product(title = title, desc = desc, proteins = pr, fats = fat, carbohydrates = carb)
-            productRepo.add(product)
+            if (product == null) {
+                val newProduct =
+                    Product(
+                        title = title,
+                        desc = desc,
+                        proteins = pr,
+                        fats = fat,
+                        carbohydrates = carb
+                    )
+                productRepo.add(newProduct)
+            } else {
+                product.title = title
+                product.desc = desc
+                product.proteins = pr
+                product.fats = fat
+                product.carbohydrates = carb
+                productRepo.edit(product)
+            }
+
+
             _shouldFinishActivityLD.value = Unit
         }
     }

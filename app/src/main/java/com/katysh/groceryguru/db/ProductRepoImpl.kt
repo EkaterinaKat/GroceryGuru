@@ -18,7 +18,7 @@ class ProductRepoImpl @Inject constructor(
     }
 
     override suspend fun edit(product: Product) {
-        dao.add(product)
+        dao.update(product)
     }
 
     override suspend fun getById(id: Int): Product {

@@ -11,15 +11,12 @@ import kotlinx.parcelize.Parcelize
 data class Product(
     @PrimaryKey(autoGenerate = true)
     val id: Int = UNSPECIFIED_ID,
-    val title: String? = null,
-    val desc: String? = null,
-    val proteins: Int? = null,
-    val fats: Int? = null,
-    val carbohydrates: Int? = null
+    var title: String? = null,
+    var desc: String? = null,
+    var proteins: Int? = null,
+    var fats: Int? = null,
+    var carbohydrates: Int? = null
 ) : Parcelable {
-    override fun toString(): String {
-        return title ?: "no title :((("
-    }
 
     fun getFullInfo(): String {
         return "$title\n$desc\n${getNutrientsInfo()}"

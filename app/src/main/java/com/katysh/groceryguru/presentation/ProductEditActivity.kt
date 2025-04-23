@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityProductEditBinding
+import com.katysh.groceryguru.model.Product
 import com.katysh.groceryguru.presentation.viewmodel.ProductEditViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 class ProductEditActivity : AppCompatActivity() {
+    private var product: Product? = null
 
     private val binding by lazy {
         ActivityProductEditBinding.inflate(layoutInflater)
@@ -39,12 +41,22 @@ class ProductEditActivity : AppCompatActivity() {
 
         binding.okButton.setOnClickListener {
             viewModel.validateAndSave(
+                product,
                 binding.titleEt.text.toString(),
                 binding.descEt.text.toString(),
                 binding.proteinEt.text.toString(),
                 binding.fatEt.text.toString(),
                 binding.carbEt.text.toString()
             )
+        }
+
+        product = intent.getParcelableExtra(PRODUCT_EXTRA)
+        product?.let {
+            binding.titleEt.setText(it.title)
+            binding.descEt.setText(it.desc)
+            binding.proteinEt.setText(it.proteins.toString())
+            binding.fatEt.setText(it.fats.toString())
+            binding.carbEt.setText(it.carbohydrates.toString())
         }
     }
 
@@ -58,9 +70,12 @@ class ProductEditActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val PRODUCT_EXTRA = "product_extra"
 
-        fun newIntent(context: Context): Intent {
-            return Intent(context, ProductEditActivity::class.java)
+        fun newIntent(context: Context, product: Product?): Intent {
+            return Intent(context, ProductEditActivity::class.java).apply {
+                putExtra(PRODUCT_EXTRA, product)
+            }
         }
     }
 }

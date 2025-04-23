@@ -90,7 +90,7 @@ class ReportRepoImpl @Inject constructor(
     }
 
     companion object {
-        const val PROTEIN_NORM = 100
+        const val PROTEIN_NORM = 120
         const val FATS_NORM = 60
         const val CARBS_NORM = 150
 

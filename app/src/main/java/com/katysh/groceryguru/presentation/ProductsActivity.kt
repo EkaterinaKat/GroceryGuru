@@ -40,7 +40,7 @@ class ProductsActivity : AppCompatActivity() {
         component.inject(this)
 
         binding.addButton.setOnClickListener {
-            startActivity(ProductEditActivity.newIntent(this))
+            startActivity(ProductEditActivity.newIntent(this, null))
         }
 
         observeViewModel()
