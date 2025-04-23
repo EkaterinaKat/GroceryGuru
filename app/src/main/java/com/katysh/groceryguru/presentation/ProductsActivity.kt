@@ -11,7 +11,6 @@ import com.katysh.groceryguru.model.Product
 import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
-import com.katysh.groceryguru.util.copyToClipboard
 import javax.inject.Inject
 
 class ProductsActivity : AppCompatActivity() {
@@ -51,7 +50,7 @@ class ProductsActivity : AppCompatActivity() {
             productClickListener(it)
         }
 
-//        binding.backupButton.setOnClickListener { viewModel.backup() }
+        binding.backupButton.setOnClickListener { viewModel.backup() }
     }
 
     private fun observeViewModel() {
@@ -61,9 +60,12 @@ class ProductsActivity : AppCompatActivity() {
         viewModel.errorLD.observe(this) {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
         }
-        viewModel.backupLD.observe(this) {
-            copyToClipboard(this, it)
-            Toast.makeText(this, "Backup copied to clipboard", Toast.LENGTH_LONG).show()
+        viewModel.backupResultLD.observe(this) {
+            if (it) {
+                Toast.makeText(this, "Backup saved", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

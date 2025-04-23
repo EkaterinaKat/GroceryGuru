@@ -1,5 +1,6 @@
 package com.katysh.groceryguru.presentation.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.domain.BackupRepo
@@ -14,7 +15,8 @@ class ViewModelFactory @Inject constructor(
     private val expirationRepo: ExpirationRepo,
     private val entryRepo: EntryRepo,
     private val backupRepo: BackupRepo,
-    private val reportRepo: ReportRepo
+    private val reportRepo: ReportRepo,
+    private val application: Application
 ) : ViewModelProvider.Factory {
 
 
@@ -23,7 +25,7 @@ class ViewModelFactory @Inject constructor(
             return ProductEditViewModel(productRepo) as T
         }
         if (modelClass == ProductsViewModel::class.java) {
-            return ProductsViewModel(productRepo, expirationRepo, backupRepo) as T
+            return ProductsViewModel(productRepo, expirationRepo, backupRepo, application) as T
         }
         if (modelClass == ExpirationEditViewModel::class.java) {
             return ExpirationEditViewModel(productRepo, expirationRepo) as T

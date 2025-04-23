@@ -1,5 +1,6 @@
 package com.katysh.groceryguru.presentation.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,14 +9,18 @@ import com.katysh.groceryguru.domain.BackupRepo
 import com.katysh.groceryguru.domain.ExpirationRepo
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.util.getDateString
+import com.katysh.groceryguru.util.saveTextFileToDownloads
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 
 class ProductsViewModel(
     private val productRepo: ProductRepo,
     private val expirationRepo: ExpirationRepo,
-    private val backupRepo: BackupRepo
+    private val backupRepo: BackupRepo,
+    private val application: Application
 ) : ViewModel() {
 
     val productsLD: LiveData<List<Product>>
@@ -25,9 +30,9 @@ class ProductsViewModel(
     val errorLD: LiveData<Unit>
         get() = _errorLD
 
-    private val _backupLD = MutableLiveData<String>()
-    val backupLD: LiveData<String>
-        get() = _backupLD
+    private val _backupResultLD = MutableLiveData<Boolean>()
+    val backupResultLD: LiveData<Boolean>
+        get() = _backupResultLD
 
     fun delete(product: Product) {
         viewModelScope.launch {
@@ -41,10 +46,14 @@ class ProductsViewModel(
 
     fun backup() {
         viewModelScope.launch {
-            _backupLD.value = withContext(Dispatchers.Default) {
-                backupRepo.getBackup()
+            val res = withContext(Dispatchers.Default) {
+                saveTextFileToDownloads(
+                    application,
+                    backupRepo.getBackup(),
+                    "GG-backup-" + getDateString(Date())
+                )
             }
+            _backupResultLD.value = res
         }
-
     }
 }
