@@ -15,12 +15,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <ImageButton
             android:id="@+id/productsButton"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:text="P" />
+            android:background="@mipmap/apple"
+            android:layout_margin="10dp"/>
 
         <TextView
             android:id="@+id/main_date_text_view"
@@ -30,14 +31,16 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="30sp"
-            tools:text="12.04.2025 (Сб)" />
+            tools:text="12.04.2025 (Сб)"
+            android:layout_marginTop="10dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/addEntryButton"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:text="+" />
+            android:layout_margin="10dp"
+            android:background="@mipmap/plus" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
