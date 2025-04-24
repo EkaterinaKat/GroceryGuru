@@ -1,18 +1,24 @@
 package com.katysh.groceryguru.db
 
 import android.app.Application
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.ExpirationEntry
+import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
 
+
 @Database(
-    entities = [Product::class, ExpirationEntry::class, Entry::class],
-    version = 3,
-    exportSchema = false
+    entities = [Product::class, ExpirationEntry::class, Entry::class, Portion::class],
+    version = 4,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 3, to = 4)
+    ]
 )
 @TypeConverters(value = [DateConverter::class])
 abstract class AppDatabase : RoomDatabase() {

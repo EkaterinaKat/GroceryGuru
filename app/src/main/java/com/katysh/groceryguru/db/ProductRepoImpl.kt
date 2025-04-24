@@ -2,6 +2,7 @@ package com.katysh.groceryguru.db
 
 import androidx.lifecycle.LiveData
 import com.katysh.groceryguru.domain.ProductRepo
+import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
 import javax.inject.Inject
 
@@ -11,6 +12,10 @@ class ProductRepoImpl @Inject constructor(
 
     override suspend fun add(product: Product) {
         dao.add(product)
+    }
+
+    override suspend fun add(portion: Portion) {
+        dao.add(portion)
     }
 
     override suspend fun delete(product: Product) {
