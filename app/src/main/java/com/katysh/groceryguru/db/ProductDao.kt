@@ -17,6 +17,9 @@ interface ProductDao {
     fun getList(): List<Product>
 
     @Query("SELECT * FROM product ORDER BY title")
+    fun getListWithPortions(): LiveData<List<ProductWithPortions>>
+
+    @Query("SELECT * FROM product ORDER BY title")
     fun getListLd(): LiveData<List<Product>>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)

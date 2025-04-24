@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductWithPortions
 import javax.inject.Inject
 
 class ProductRepoImpl @Inject constructor(
@@ -32,6 +33,10 @@ class ProductRepoImpl @Inject constructor(
 
     override fun getList(): List<Product> {
         return dao.getList()
+    }
+
+    override fun getListWithPortionsLd(): LiveData<List<ProductWithPortions>> {
+        return dao.getListWithPortions()
     }
 
     override fun getListLd(): LiveData<List<Product>> {

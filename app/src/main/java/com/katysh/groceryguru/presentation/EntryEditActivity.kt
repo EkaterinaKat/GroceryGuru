@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityEntryEditBinding
-import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.viewmodel.EntryEditViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class EntryEditActivity : AppCompatActivity() {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-    private var product: Product? = null
+    private var product: ProductWithPortions? = null
 
     private val binding by lazy {
         ActivityEntryEditBinding.inflate(layoutInflater)
@@ -49,7 +49,8 @@ class EntryEditActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                val product = result.data?.getParcelableExtra<Product>(PRODUCT_RESULT_KEY)
+                val product =
+                    result.data?.getParcelableExtra<ProductWithPortions>(PRODUCT_RESULT_KEY)
                 setProduct(product)
             }
         }
@@ -71,7 +72,7 @@ class EntryEditActivity : AppCompatActivity() {
 
     private fun save() {
         viewModel.validateAndSave(
-            product,
+            product?.product,
             binding.weightEt.text.toString(),
             binding.datePicker.year,
             binding.datePicker.month,
@@ -79,9 +80,9 @@ class EntryEditActivity : AppCompatActivity() {
         )
     }
 
-    private fun setProduct(product: Product?) {
+    private fun setProduct(product: ProductWithPortions?) {
         this.product = product
-        binding.productTv.text = product?.getFullInfo() ?: "null"
+        binding.productTv.text = product?.product?.getFullInfo() ?: "null"
     }
 
     companion object {

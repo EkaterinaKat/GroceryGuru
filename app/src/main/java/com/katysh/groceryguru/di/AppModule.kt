@@ -5,12 +5,10 @@ import com.katysh.groceryguru.db.AppDatabase
 import com.katysh.groceryguru.db.EntryDao
 import com.katysh.groceryguru.db.EntryRepoImpl
 import com.katysh.groceryguru.db.ExpirationEntryDao
-import com.katysh.groceryguru.db.ExpirationRepoImpl
 import com.katysh.groceryguru.db.ProductDao
 import com.katysh.groceryguru.db.ProductRepoImpl
 import com.katysh.groceryguru.domain.BackupRepo
 import com.katysh.groceryguru.domain.EntryRepo
-import com.katysh.groceryguru.domain.ExpirationRepo
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.domain.ReportRepo
 import com.katysh.groceryguru.logic.BackupRepoImpl
@@ -24,9 +22,6 @@ interface AppModule {
 
     @Binds
     fun bindProductRepo(impl: ProductRepoImpl): ProductRepo
-
-    @Binds
-    fun bindExpirationRepo(impl: ExpirationRepoImpl): ExpirationRepo
 
     @Binds
     fun bindEntryRepo(impl: EntryRepoImpl): EntryRepo

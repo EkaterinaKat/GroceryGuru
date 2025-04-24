@@ -3,6 +3,7 @@ package com.katysh.groceryguru.domain
 import androidx.lifecycle.LiveData
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductWithPortions
 
 interface ProductRepo {
 
@@ -19,4 +20,6 @@ interface ProductRepo {
     fun getList(): List<Product>
 
     fun getListLd(): LiveData<List<Product>>
+
+    fun getListWithPortionsLd(): LiveData<List<ProductWithPortions>>
 }

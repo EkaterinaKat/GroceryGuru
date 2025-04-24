@@ -20,9 +20,6 @@
             android:name=".presentation.EntryEditActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ExpirationEditActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.ProductEditActivity"
             android:exported="false" />
         <activity

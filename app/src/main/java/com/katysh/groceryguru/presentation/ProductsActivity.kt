@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityProductsBinding
-import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
@@ -57,9 +57,6 @@ class ProductsActivity : AppCompatActivity() {
         viewModel.productsLD.observe(this) {
             adapter.setProducts(it)
         }
-        viewModel.errorLD.observe(this) {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-        }
         viewModel.backupResultLD.observe(this) {
             if (it) {
                 Toast.makeText(this, "Backup saved", Toast.LENGTH_LONG).show()
@@ -69,7 +66,7 @@ class ProductsActivity : AppCompatActivity() {
         }
     }
 
-    private fun productClickListener(product: Product) {
+    private fun productClickListener(product: ProductWithPortions) {
         val dialog = ProductMenuDialog(this, product, viewModel) {}
         dialog.show(supportFragmentManager, "TaskMenuDialog")
     }

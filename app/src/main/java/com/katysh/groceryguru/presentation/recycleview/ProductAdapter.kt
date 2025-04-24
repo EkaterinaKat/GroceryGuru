@@ -1,43 +1,38 @@
 package com.katysh.groceryguru.presentation.recycleview
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.katysh.groceryguru.R
-import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductWithPortions
 
 class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
 
-    private var products: List<Product> = ArrayList()
-    var onClickListener: ((Product) -> Unit)? = null
+    private var products: List<ProductWithPortions> = ArrayList()
+    var onClickListener: ((ProductWithPortions) -> Unit)? = null
 
-    fun setProducts(products: List<Product>) {
-        Log.i("tag984521", "setProducts")
+    fun setProducts(products: List<ProductWithPortions>) {
         this.products = products
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        Log.i("tag984521", "onCreateViewHolder")
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.product_item, parent, false)
         return ProductViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        Log.i("tag984521", "onBindViewHolder")
         val product = products[position]
-        holder.textView.text = product.getFullInfo()
+        holder.textView.text = product.product.getFullInfo()
         holder.itemView.setOnClickListener {
             onClickListener?.invoke(product)
         }
     }
 
     override fun getItemCount(): Int {
-        Log.i("tag984521", "getItemCount")
         return products.size
     }
 }

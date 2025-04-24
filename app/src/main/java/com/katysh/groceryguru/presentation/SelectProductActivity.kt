@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivitySelectProductBinding
-import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.EntryEditActivity.Companion.PRODUCT_RESULT_KEY
 import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
@@ -54,7 +54,7 @@ class SelectProductActivity : AppCompatActivity() {
         }
     }
 
-    private fun productClickListener(product: Product) {
+    private fun productClickListener(product: ProductWithPortions) {
         val resultIntent = Intent().apply {
             putExtra(PRODUCT_RESULT_KEY, product)
         }

@@ -1,12 +1,15 @@
 package com.katysh.groceryguru.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.katysh.groceryguru.util.UNSPECIFIED_ID
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(
     tableName = "portion",
     foreignKeys = [ForeignKey(
@@ -27,4 +30,4 @@ data class Portion(
 
     @ColumnInfo(name = "product_id")
     val productId: Int
-)
+) : Parcelable
