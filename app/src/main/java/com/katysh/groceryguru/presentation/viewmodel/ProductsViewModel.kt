@@ -79,4 +79,11 @@ class ProductsViewModel(
             _selectedProductLD.value = productRepo.getByIdWithPortions(it.product.id)
         }
     }
+
+    fun delete(portion: Portion) {
+        viewModelScope.launch {
+            productRepo.delete(portion)
+            updateSelectedProduct()
+        }
+    }
 }

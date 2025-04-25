@@ -11,6 +11,8 @@ interface ProductRepo {
 
     suspend fun add(portion: Portion)
 
+    suspend fun delete(portion: Portion)
+
     suspend fun delete(product: Product)
 
     suspend fun edit(product: Product)

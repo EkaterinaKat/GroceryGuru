@@ -2,7 +2,6 @@ package com.katysh.groceryguru.presentation
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -76,9 +75,19 @@ class ProductMenuDialog(
                 ).apply {
                     gravity = Gravity.CENTER
                 }
+                setOnClickListener { onPortionClickListener(portion) }
             }
             portionLayout.addView(textView)
         }
+    }
+
+    private fun onPortionClickListener(portion: Portion) {
+        val dlg1: DialogFragment = QuestionDialog("Delete ${portion.title}?") {
+            if (it) {
+                viewModel.delete(portion)
+            }
+        }
+        dlg1.show(context.supportFragmentManager, "dialog")
     }
 
     override fun onDismiss(dialog: DialogInterface) {

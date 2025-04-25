@@ -19,8 +19,12 @@ class ProductRepoImpl @Inject constructor(
         dao.add(portion)
     }
 
+    override suspend fun delete(portion: Portion) {
+        dao.deletePortion(portion.id)
+    }
+
     override suspend fun delete(product: Product) {
-        dao.delete(product.id)
+        dao.deleteProduct(product.id)
     }
 
     override suspend fun edit(product: Product) {

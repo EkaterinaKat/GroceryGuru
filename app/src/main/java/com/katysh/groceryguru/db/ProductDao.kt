@@ -29,7 +29,10 @@ interface ProductDao {
     suspend fun update(product: Product): Int
 
     @Query("DELETE FROM product WHERE id=:id")
-    suspend fun delete(id: Int)
+    suspend fun deleteProduct(id: Int)
+
+    @Query("DELETE FROM portion WHERE id=:id")
+    suspend fun deletePortion(id: Int)
 
     @Query("SELECT * FROM product WHERE id=:id LIMIT 1")
     suspend fun getById(id: Int): Product
