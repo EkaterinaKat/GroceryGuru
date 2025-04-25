@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katysh.groceryguru.domain.EntryRepo
-import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.Product
 import kotlinx.coroutines.launch
@@ -13,7 +12,6 @@ import java.util.Calendar
 import java.util.Date
 
 class EntryEditViewModel(
-    private val productRepo: ProductRepo,
     private val entryRepo: EntryRepo
 ) : ViewModel() {
 
@@ -25,19 +23,15 @@ class EntryEditViewModel(
     val shouldFinishActivityLD: LiveData<Unit>
         get() = _shouldFinishActivityLD
 
-    //todo ненужно
-    val productsLD: LiveData<List<Product>>
-        get() = productRepo.getListLd()
-
-    fun validateAndSave(product: Product?, weight: String?, year: Int?, month: Int?, day: Int?) {
+    fun validateAndSave(product: Product?, weight: String?, date: Date?) {
         if (product == null
             || weight == null || weight.trim().isEmpty()
-            || year == null || month == null || day == null
+            || date == null
         ) {
             _errorLD.value = Unit
         } else {
 
-            save(product, weight.toInt(), convertToDate(year, month, day))
+            save(product, weight.toInt(), date)
         }
     }
 

@@ -34,6 +34,15 @@ fun parse(year: Int, month: Int, day: Int): Date {
     }
 }
 
+fun getDateByString(s: String?): Date? {
+    try {
+        return READABLE_DATE_FORMAT.parse(s)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return null
+}
+
 fun daysLeft(expirationDate: Date): Int {
     return getNumberOfDays(removeTimeFromDate(Date()), removeTimeFromDate(expirationDate)) + 1
 }

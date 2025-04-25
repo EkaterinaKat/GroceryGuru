@@ -1,8 +1,14 @@
 package com.katysh.groceryguru.presentation
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.View
+import android.widget.Button
+import android.widget.DatePicker
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,9 +16,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityEntryEditBinding
+import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.viewmodel.EntryEditViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
+import com.katysh.groceryguru.util.getDateByString
+import com.katysh.groceryguru.util.getDateString
+import java.util.Date
 import javax.inject.Inject
 
 
@@ -44,6 +54,10 @@ class EntryEditActivity : AppCompatActivity() {
 
         binding.okButton.setOnClickListener { save() }
         binding.productTv.setOnClickListener { onProductTvClickListener() }
+        binding.dateTextView.text = getDateString(Date())
+        binding.dateTextView.setOnClickListener(View.OnClickListener { view: View? ->
+            openDatePicker()
+        })
 
         resultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -54,7 +68,6 @@ class EntryEditActivity : AppCompatActivity() {
                 setProduct(product)
             }
         }
-
     }
 
     private fun observeViewModel() {
@@ -66,6 +79,14 @@ class EntryEditActivity : AppCompatActivity() {
         }
     }
 
+    fun openDatePicker() {
+        val datePickerDialog = DatePickerDialog(this)
+        datePickerDialog.setOnDateSetListener { dp: DatePicker?, year: Int, month: Int, day: Int ->
+            binding.dateTextView.text = getDateString(year, month + 1, day)
+        }
+        datePickerDialog.show()
+    }
+
     private fun onProductTvClickListener() {
         resultLauncher.launch(Intent(this, SelectProductActivity::class.java))
     }
@@ -74,15 +95,41 @@ class EntryEditActivity : AppCompatActivity() {
         viewModel.validateAndSave(
             product?.product,
             binding.weightEt.text.toString(),
-            binding.datePicker.year,
-            binding.datePicker.month,
-            binding.datePicker.dayOfMonth
+            getDateByString(binding.dateTextView.text.toString())
         )
     }
 
     private fun setProduct(product: ProductWithPortions?) {
         this.product = product
-        binding.productTv.text = product?.product?.getFullInfo() ?: "null"
+
+        product?.let {
+            binding.productTv.text = it.product.getFullInfo()
+            fillPortionLayout(it.portions)
+        }
+
+
+    }
+
+    private fun fillPortionLayout(portions: List<Portion>) {
+        binding.portionLayout.removeAllViews()
+        for (portion in portions) {
+
+            val textView = Button(this).apply {
+                text = "${portion.title} ${portion.weight}"
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    gravity = Gravity.CENTER
+                }
+                setOnClickListener { onPortionClickListener(portion) }
+            }
+            binding.portionLayout.addView(textView)
+        }
+    }
+
+    private fun onPortionClickListener(portion: Portion) {
+        binding.weightEt.setText(portion.weight.toString())
     }
 
     companion object {

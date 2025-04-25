@@ -29,7 +29,7 @@ class ViewModelFactory @Inject constructor(
             return MainActivityViewModel(entryRepo, reportRepo) as T
         }
         if (modelClass == EntryEditViewModel::class.java) {
-            return EntryEditViewModel(productRepo, entryRepo) as T
+            return EntryEditViewModel(entryRepo) as T
         }
         throw RuntimeException()
     }

@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ExpirationEditActivity">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/productTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/weightEt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:text="select product"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
         tools:text="Курица 150 \n 23 2 0" />
 
     <EditText
         android:id="@+id/weightEt"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:importantForAutofill="no"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/datePicker"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productTv" />
+        android:layout_margin="10dp" />
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/portion_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/okButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightEt" />
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" />
 
+    <TextView
+        android:id="@+id/date_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Select date" />
 
     <Button
         android:id="@+id/okButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ok"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+        android:layout_margin="10dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
