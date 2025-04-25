@@ -67,7 +67,8 @@ class ProductsActivity : AppCompatActivity() {
     }
 
     private fun productClickListener(product: ProductWithPortions) {
-        val dialog = ProductMenuDialog(this, product, viewModel) {}
+        viewModel.selectProduct(product)
+        val dialog = ProductMenuDialog(this, viewModel) {}
         dialog.show(supportFragmentManager, "TaskMenuDialog")
     }
 }

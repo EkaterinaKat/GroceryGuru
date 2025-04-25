@@ -31,6 +31,10 @@ class ProductRepoImpl @Inject constructor(
         return dao.getById(id)
     }
 
+    override suspend fun getByIdWithPortions(id: Int): ProductWithPortions {
+        return dao.getProductWithPortions(id)
+    }
+
     override fun getList(): List<Product> {
         return dao.getList()
     }

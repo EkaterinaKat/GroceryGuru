@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katysh.groceryguru.domain.BackupRepo
 import com.katysh.groceryguru.domain.ProductRepo
+import com.katysh.groceryguru.model.Portion
+import com.katysh.groceryguru.model.Product
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.util.getDateString
 import com.katysh.groceryguru.util.saveTextFileToDownloads
@@ -28,6 +30,14 @@ class ProductsViewModel(
     val backupResultLD: LiveData<Boolean>
         get() = _backupResultLD
 
+    private val _selectedProductLD = MutableLiveData<ProductWithPortions>()
+    val selectedProductLD: LiveData<ProductWithPortions>
+        get() = _selectedProductLD
+
+    private val _errorLD = MutableLiveData<Unit>()
+    val errorLD: LiveData<Unit>
+        get() = _errorLD
+
     fun backup() {
         viewModelScope.launch {
             val res = withContext(Dispatchers.Default) {
@@ -38,6 +48,35 @@ class ProductsViewModel(
                 )
             }
             _backupResultLD.value = res
+        }
+    }
+
+    fun selectProduct(productWithPortions: ProductWithPortions) {
+        _selectedProductLD.value = productWithPortions
+    }
+
+    fun validateAndSavePortion(title: String?, gram: String?) {
+        if (title == null || title.trim().isEmpty()
+            || gram == null || gram.trim().isEmpty()
+            || _selectedProductLD.value == null
+        ) {
+            _errorLD.value = Unit
+        } else {
+            _selectedProductLD.value?.let { save(it.product, title, gram.toInt()) }
+        }
+    }
+
+    private fun save(product: Product, title: String, gram: Int) {
+        viewModelScope.launch {
+            val portion = Portion(title = title, weight = gram, productId = product.id)
+            productRepo.add(portion)
+            updateSelectedProduct()
+        }
+    }
+
+    private suspend fun updateSelectedProduct() {
+        _selectedProductLD.value?.let {
+            _selectedProductLD.value = productRepo.getByIdWithPortions(it.product.id)
         }
     }
 }

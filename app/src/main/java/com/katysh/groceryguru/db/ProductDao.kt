@@ -35,7 +35,7 @@ interface ProductDao {
     suspend fun getById(id: Int): Product
 
     @Query("SELECT * FROM product WHERE id=:id LIMIT 1")
-    suspend fun getProductWithPortions(id: Long): ProductWithPortions
+    suspend fun getProductWithPortions(id: Int): ProductWithPortions
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(portion: Portion)
