@@ -52,7 +52,7 @@ class ReportRepoImpl @Inject constructor(
                     formatNum(fatTotal),
                     formatNum(carbTotal)
                 ),
-                color = R.color.blue
+                drawable = R.drawable.blue_gradient
             )
         )
 
@@ -64,7 +64,7 @@ class ReportRepoImpl @Inject constructor(
                     FATS_NORM.toString(),
                     CARBS_NORM.toString(),
                 ),
-                color = R.color.grey
+                drawable = R.drawable.grey_gradient
             )
         )
 
@@ -76,7 +76,7 @@ class ReportRepoImpl @Inject constructor(
                     formatNum(FATS_NORM - fatTotal),
                     formatNum(CARBS_NORM - carbTotal)
                 ),
-                color = R.color.creamy
+                drawable = R.drawable.orange_gradient
             )
         )
 

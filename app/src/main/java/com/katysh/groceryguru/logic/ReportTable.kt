@@ -8,6 +8,7 @@ data class ReportTable(
 
 data class ReportLine(
     val content: List<String>,
-    var entry: EntryWithProduct?=null,
-    var color: Int?=null
+    val entry: EntryWithProduct? = null,
+    val color: Int? = null,
+    val drawable: Int? = null
 )

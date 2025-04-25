@@ -1,7 +1,6 @@
 package com.katysh.groceryguru.presentation.recycleview
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +41,12 @@ class ReportAdapter(
             }
         }
 
-        val color:Int = context.resources.getColor(line.color?:R.color.white)
-        holder.itemView.setBackgroundColor(color)
+        if (line.drawable != null) {
+            holder.itemView.setBackgroundResource(line.drawable)
+        } else {
+            val color: Int = context.resources.getColor(line.color ?: R.color.white)
+            holder.itemView.setBackgroundColor(color)
+        }
     }
 
     override fun getItemCount(): Int {
