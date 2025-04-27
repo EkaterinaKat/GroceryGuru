@@ -2,7 +2,6 @@ package com.katysh.groceryguru.presentation
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
@@ -11,9 +10,10 @@ import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
+import com.katysh.groceryguru.util.GgActivity
 import javax.inject.Inject
 
-class ProductsActivity : AppCompatActivity() {
+class ProductsActivity : GgActivity() {
 
     private val binding by lazy {
         ActivityProductsBinding.inflate(layoutInflater)
@@ -31,6 +31,10 @@ class ProductsActivity : AppCompatActivity() {
     }
 
     private val adapter = ProductAdapter()
+
+    init {
+        setOnLeftSwipe(this::finish)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,7 +6,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +16,14 @@ import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.presentation.recycleview.ReportAdapter
 import com.katysh.groceryguru.presentation.viewmodel.MainActivityViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
+import com.katysh.groceryguru.util.GgActivity
 import com.katysh.groceryguru.util.equalsIgnoreTime
 import com.katysh.groceryguru.util.getDateStringWithWeekDay
 import com.katysh.groceryguru.util.parse
 import java.util.Date
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : GgActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
 
     private val reportAdapter = ReportAdapter(this)
 
+    init {
+        setOnLeftSwipe { viewModel.prevDate() }
+        setOnRightSwipe { viewModel.nextDate() }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -57,9 +62,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         observeViewModel()
-
-        binding.prevButton.setOnClickListener { viewModel.prevDate() }
-        binding.nextButton.setOnClickListener { viewModel.nextDate() }
 
         binding.mainDateTextView.setOnClickListener { openDatePicker() }
 

@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityEntryEditBinding
@@ -21,13 +20,14 @@ import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.viewmodel.EntryEditViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
+import com.katysh.groceryguru.util.GgActivity
 import com.katysh.groceryguru.util.getDateByString
 import com.katysh.groceryguru.util.getDateString
 import java.util.Date
 import javax.inject.Inject
 
 
-class EntryEditActivity : AppCompatActivity() {
+class EntryEditActivity : GgActivity() {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private var product: ProductWithPortions? = null
     private var selectedMealNum: MealNum? = null
@@ -45,6 +45,10 @@ class EntryEditActivity : AppCompatActivity() {
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[EntryEditViewModel::class.java]
+    }
+
+    init {
+        setOnLeftSwipe(this::finish)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
