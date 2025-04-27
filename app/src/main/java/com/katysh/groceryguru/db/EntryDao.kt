@@ -22,4 +22,7 @@ interface EntryDao {
 
     @Query("SELECT * FROM entry WHERE entry_date = :date")
     suspend fun getEntriesByDate(date: Date): List<EntryWithProduct>
+
+    @Query("SELECT * FROM entry ORDER BY id DESC LIMIT 1")
+    fun getEntryWithMaxId(): Entry?
 }

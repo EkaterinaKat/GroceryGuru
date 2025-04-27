@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityEntryEditBinding
+import com.katysh.groceryguru.model.MealNum
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.viewmodel.EntryEditViewModel
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class EntryEditActivity : AppCompatActivity() {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private var product: ProductWithPortions? = null
+    private var selectedMealNum: MealNum? = null
 
     private val binding by lazy {
         ActivityEntryEditBinding.inflate(layoutInflater)
@@ -77,6 +79,32 @@ class EntryEditActivity : AppCompatActivity() {
         viewModel.shouldFinishActivityLD.observe(this) {
             finish()
         }
+        viewModel.defaultMealNumLD.observe(this) {
+            selectMealNum(it)
+        }
+    }
+
+    private fun selectMealNum(mealNum: MealNum?) {
+        selectedMealNum = mealNum
+        binding.mealNumLayout.removeAllViews()
+        for (mn in MealNum.entries) {
+            val button = Button(this).apply {
+                val lp = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                lp.weight = 1f
+
+                layoutParams = lp
+                text = mn.num.toString()
+                if (mn == selectedMealNum) {
+                    setBackgroundColor(resources.getColor(mn.color))
+                }
+                setOnClickListener { selectMealNum(mn) }
+            }
+
+            binding.mealNumLayout.addView(button)
+        }
     }
 
     fun openDatePicker() {
@@ -95,7 +123,8 @@ class EntryEditActivity : AppCompatActivity() {
         viewModel.validateAndSave(
             product?.product,
             binding.weightEt.text.toString(),
-            getDateByString(binding.dateTextView.text.toString())
+            getDateByString(binding.dateTextView.text.toString()),
+            selectedMealNum
         )
     }
 

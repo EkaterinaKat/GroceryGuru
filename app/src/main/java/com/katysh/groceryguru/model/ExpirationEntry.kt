@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.katysh.groceryguru.db.DateConverter
+import com.katysh.groceryguru.db.Converters
 import com.katysh.groceryguru.util.UNSPECIFIED_ID
 import java.util.Date
 
@@ -14,11 +14,11 @@ data class ExpirationEntry(
     val id: Int = UNSPECIFIED_ID,
 
     @ColumnInfo(name = "expiration_date")
-    @TypeConverters(DateConverter::class)
+    @TypeConverters(Converters::class)
     val expirationDate: Date?,
 
     @ColumnInfo(name = "start_date")
-    @TypeConverters(DateConverter::class)
+    @TypeConverters(Converters::class)
     val startDate: Date?,
 
     @ColumnInfo(name = "product_id")

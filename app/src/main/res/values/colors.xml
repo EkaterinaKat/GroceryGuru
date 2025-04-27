@@ -6,4 +6,10 @@
     <color name="blue">#80DAEB</color>
     <color name="grey">#a6a6a6</color>
     <color name="creamy">#FDD9B5</color>
+
+    <color name="meal_1">#D4FFCC</color>
+    <color name="meal_2">#ffccf8</color>
+    <color name="meal_3">#FFFACC</color>
+    <color name="meal_4">#ffccf8</color>
+    <color name="meal_5">#CCFFFA</color>
 </resources>

@@ -15,7 +15,7 @@ class ReportRepoImpl @Inject constructor(
         table.add(ReportLine(content = listOf("", "Б", "Ж", "У")))
         val entryLines = mutableListOf<ReportLine>()
 
-        val entries = dao.getEntriesByDate(date)
+        val entries = dao.getEntriesByDate(date).sortedBy { it.entry.mealNum?.num }
         var proteinTotal = 0f
         var fatTotal = 0f
         var carbTotal = 0f
@@ -35,7 +35,8 @@ class ReportRepoImpl @Inject constructor(
                         formatNum(fat),
                         formatNum(carbs)
                     ),
-                    entry = entry
+                    entry = entry,
+                    color = entry.entry.mealNum?.color
                 )
             )
 

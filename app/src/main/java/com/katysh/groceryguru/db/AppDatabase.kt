@@ -14,13 +14,13 @@ import com.katysh.groceryguru.model.Product
 
 @Database(
     entities = [Product::class, ExpirationEntry::class, Entry::class, Portion::class],
-    version = 4,
+    version = 5,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 3, to = 4)
+        AutoMigration(from = 4, to = 5)
     ]
 )
-@TypeConverters(value = [DateConverter::class])
+@TypeConverters(value = [Converters::class])
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun productDao(): ProductDao
