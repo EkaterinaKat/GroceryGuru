@@ -44,7 +44,19 @@ class ProductRepoImpl @Inject constructor(
     }
 
     override fun getListWithPortionsLd(): LiveData<List<ProductWithPortions>> {
-        return dao.getListWithPortions()
+        return dao.getListWithPortionsLD()
+    }
+
+    override fun getListWithPortions(str: String?): List<ProductWithPortions> {
+        var products = dao.getListWithPortions()
+        if (str != null && str.trim() != "") {
+            products = products.filter {
+                it.product.title?.contains(str) == true
+                        || it.product.desc?.contains(str) == true
+            }
+        }
+        return products
+
     }
 
     override fun getListLd(): LiveData<List<Product>> {

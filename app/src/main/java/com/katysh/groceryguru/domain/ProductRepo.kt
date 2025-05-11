@@ -26,4 +26,6 @@ interface ProductRepo {
     fun getListLd(): LiveData<List<Product>>
 
     fun getListWithPortionsLd(): LiveData<List<ProductWithPortions>>
+
+    fun getListWithPortions(str: String?): List<ProductWithPortions>
 }

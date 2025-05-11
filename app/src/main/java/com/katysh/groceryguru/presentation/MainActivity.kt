@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -81,7 +80,6 @@ class MainActivity : GgActivity() {
             setDateViewStyle(it)
         }
         viewModel.reportLD.observe(this) {
-            Log.i("tag984521", "viewModel.reportLD.observe(this)")
             reportAdapter.setReportTable(it)
         }
     }

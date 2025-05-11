@@ -1,6 +1,8 @@
 package com.katysh.groceryguru.presentation
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,6 +36,10 @@ class ProductsActivity : GgActivity() {
 
     init {
         setOnLeftSwipe(this::finish)
+        setOnStart {
+            viewModel.updateProductList(binding.searchEt.text.toString())
+            viewModel.updateSelectedProduct()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +61,20 @@ class ProductsActivity : GgActivity() {
         }
 
         binding.backupButton.setOnClickListener { viewModel.backup() }
+        binding.searchEt.addTextChangedListener(textWatcher)
+    }
+
+    private val textWatcher = object : TextWatcher {
+
+        override fun afterTextChanged(s: Editable?) {}
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(
+            s: CharSequence, start: Int, before: Int, count: Int
+        ) {
+            viewModel.updateProductList(s.toString())
+        }
     }
 
     private fun observeViewModel() {

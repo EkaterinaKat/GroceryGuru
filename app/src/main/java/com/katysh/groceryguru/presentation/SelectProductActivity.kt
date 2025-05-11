@@ -2,6 +2,8 @@ package com.katysh.groceryguru.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +15,7 @@ import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
+
 
 class SelectProductActivity : AppCompatActivity() {
 
@@ -45,6 +48,21 @@ class SelectProductActivity : AppCompatActivity() {
         binding.productsRv.adapter = adapter
         adapter.onClickListener = {
             productClickListener(it)
+        }
+
+        binding.searchEt.addTextChangedListener(textWatcher)
+    }
+
+    private val textWatcher = object : TextWatcher {
+
+        override fun afterTextChanged(s: Editable?) {}
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(
+            s: CharSequence, start: Int, before: Int, count: Int
+        ) {
+            viewModel.updateProductList(s.toString())
         }
     }
 

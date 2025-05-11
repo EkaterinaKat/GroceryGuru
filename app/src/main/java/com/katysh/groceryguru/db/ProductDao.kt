@@ -17,7 +17,10 @@ interface ProductDao {
     fun getList(): List<Product>
 
     @Query("SELECT * FROM product ORDER BY title")
-    fun getListWithPortions(): LiveData<List<ProductWithPortions>>
+    fun getListWithPortionsLD(): LiveData<List<ProductWithPortions>>
+
+    @Query("SELECT * FROM product ORDER BY title")
+    fun getListWithPortions(): List<ProductWithPortions>
 
     @Query("SELECT * FROM product ORDER BY title")
     fun getListLd(): LiveData<List<Product>>

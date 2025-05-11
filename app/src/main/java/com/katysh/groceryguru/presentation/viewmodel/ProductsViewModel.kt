@@ -1,6 +1,7 @@
 package com.katysh.groceryguru.presentation.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,8 +24,9 @@ class ProductsViewModel(
     private val application: Application
 ) : ViewModel() {
 
+    private val _productsLD = MutableLiveData<List<ProductWithPortions>>()
     val productsLD: LiveData<List<ProductWithPortions>>
-        get() = productRepo.getListWithPortionsLd()
+        get() = _productsLD
 
     private val _backupResultLD = MutableLiveData<Boolean>()
     val backupResultLD: LiveData<Boolean>
@@ -37,6 +39,10 @@ class ProductsViewModel(
     private val _errorLD = MutableLiveData<Unit>()
     val errorLD: LiveData<Unit>
         get() = _errorLD
+
+    init {
+        updateProductList(null)
+    }
 
     fun backup() {
         viewModelScope.launch {
@@ -74,9 +80,11 @@ class ProductsViewModel(
         }
     }
 
-    private suspend fun updateSelectedProduct() {
-        _selectedProductLD.value?.let {
-            _selectedProductLD.value = productRepo.getByIdWithPortions(it.product.id)
+    fun updateSelectedProduct() {
+        viewModelScope.launch {
+            _selectedProductLD.value?.let {
+                _selectedProductLD.value = productRepo.getByIdWithPortions(it.product.id)
+            }
         }
     }
 
@@ -84,6 +92,13 @@ class ProductsViewModel(
         viewModelScope.launch {
             productRepo.delete(portion)
             updateSelectedProduct()
+        }
+    }
+
+    fun updateProductList(str: String?) {
+        Log.i("tag98765123", "updateProductList $str")
+        viewModelScope.launch(Dispatchers.Default) {
+            _productsLD.postValue(productRepo.getListWithPortions(str))
         }
     }
 }
