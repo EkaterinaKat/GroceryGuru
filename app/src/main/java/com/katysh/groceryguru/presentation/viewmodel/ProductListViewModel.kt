@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.katysh.groceryguru.domain.ProductRepo
+import com.katysh.groceryguru.db.ProductRepo
 import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.model.ProductWithPortions
 import kotlinx.coroutines.Dispatchers

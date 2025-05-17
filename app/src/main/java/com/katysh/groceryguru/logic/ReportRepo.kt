@@ -2,15 +2,14 @@ package com.katysh.groceryguru.logic
 
 import com.katysh.groceryguru.R
 import com.katysh.groceryguru.db.EntryDao
-import com.katysh.groceryguru.domain.ReportRepo
 import java.util.Date
 import javax.inject.Inject
 
-class ReportRepoImpl @Inject constructor(
+class ReportRepo @Inject constructor(
     private val dao: EntryDao
-) : ReportRepo {
+) {
 
-    override suspend fun getReport(date: Date): ReportTable {
+    suspend fun getReport(date: Date): ReportTable {
         val table = mutableListOf<ReportLine>()
         table.add(ReportLine(content = listOf("", "Б", "Ж", "У")))
         val entryLines = mutableListOf<ReportLine>()

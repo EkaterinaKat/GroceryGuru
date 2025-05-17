@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.katysh.groceryguru.domain.BackupRepo
-import com.katysh.groceryguru.domain.ProductRepo
+import com.katysh.groceryguru.db.ProductRepo
+import com.katysh.groceryguru.logic.BackupRepo
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
 import com.katysh.groceryguru.model.ProductWithPortions

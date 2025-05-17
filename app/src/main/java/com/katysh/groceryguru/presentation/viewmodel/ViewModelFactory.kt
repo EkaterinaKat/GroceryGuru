@@ -3,10 +3,10 @@ package com.katysh.groceryguru.presentation.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.katysh.groceryguru.domain.BackupRepo
-import com.katysh.groceryguru.domain.EntryRepo
-import com.katysh.groceryguru.domain.ProductRepo
-import com.katysh.groceryguru.domain.ReportRepo
+import com.katysh.groceryguru.db.EntryRepo
+import com.katysh.groceryguru.db.ProductRepo
+import com.katysh.groceryguru.logic.BackupRepo
+import com.katysh.groceryguru.logic.ReportRepo
 import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(
