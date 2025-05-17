@@ -62,7 +62,7 @@ class SelectProductActivity : AppCompatActivity() {
         override fun onTextChanged(
             s: CharSequence, start: Int, before: Int, count: Int
         ) {
-            viewModel.updateProductList(s.toString())
+            viewModel.updateProductList(s.toString(), null)
         }
     }
 

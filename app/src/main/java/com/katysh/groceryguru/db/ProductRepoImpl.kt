@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.model.ProductWithPortions
 import javax.inject.Inject
 
@@ -47,12 +48,17 @@ class ProductRepoImpl @Inject constructor(
         return dao.getListWithPortionsLD()
     }
 
-    override fun getListWithPortions(str: String?): List<ProductWithPortions> {
+    override fun getListWithPortions(str: String?, type: ProductType?): List<ProductWithPortions> {
         var products = dao.getListWithPortions()
         if (str != null && str.trim() != "") {
             products = products.filter {
                 it.product.title?.contains(str) == true
                         || it.product.desc?.contains(str) == true
+            }
+        }
+        if (type != null) {
+            products = products.filter {
+                it.product.type!! == type
             }
         }
         return products

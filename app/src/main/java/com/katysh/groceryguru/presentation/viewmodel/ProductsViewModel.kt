@@ -1,7 +1,6 @@
 package com.katysh.groceryguru.presentation.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.katysh.groceryguru.domain.BackupRepo
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.util.getDateString
 import com.katysh.groceryguru.util.saveTextFileToDownloads
@@ -41,7 +41,7 @@ class ProductsViewModel(
         get() = _errorLD
 
     init {
-        updateProductList(null)
+        updateProductList(null, null)
     }
 
     fun backup() {
@@ -95,10 +95,9 @@ class ProductsViewModel(
         }
     }
 
-    fun updateProductList(str: String?) {
-        Log.i("tag98765123", "updateProductList $str")
+    fun updateProductList(str: String?, type: ProductType?) {
         viewModelScope.launch(Dispatchers.Default) {
-            _productsLD.postValue(productRepo.getListWithPortions(str))
+            _productsLD.postValue(productRepo.getListWithPortions(str, type))
         }
     }
 }

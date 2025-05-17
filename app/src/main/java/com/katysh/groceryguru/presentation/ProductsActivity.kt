@@ -3,11 +3,15 @@ package com.katysh.groceryguru.presentation
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityProductsBinding
+import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
 import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
@@ -33,11 +37,12 @@ class ProductsActivity : GgActivity() {
     }
 
     private val adapter = ProductAdapter()
+    private var selectedType: ProductType? = null
 
     init {
         setOnLeftSwipe(this::finish)
         setOnStart {
-            viewModel.updateProductList(binding.searchEt.text.toString())
+            updateProductList()
             viewModel.updateSelectedProduct()
         }
     }
@@ -62,6 +67,8 @@ class ProductsActivity : GgActivity() {
 
         binding.backupButton.setOnClickListener { viewModel.backup() }
         binding.searchEt.addTextChangedListener(textWatcher)
+
+        adjustTypePane()
     }
 
     private val textWatcher = object : TextWatcher {
@@ -73,7 +80,7 @@ class ProductsActivity : GgActivity() {
         override fun onTextChanged(
             s: CharSequence, start: Int, before: Int, count: Int
         ) {
-            viewModel.updateProductList(s.toString())
+            updateProductList()
         }
     }
 
@@ -94,5 +101,24 @@ class ProductsActivity : GgActivity() {
         viewModel.selectProduct(product)
         val dialog = ProductMenuDialog(this, viewModel) {}
         dialog.show(supportFragmentManager, "TaskMenuDialog")
+    }
+
+    private fun adjustTypePane() {
+        for (type in ProductType.entries) {
+            val button = Button(this)
+            button.text = type.name.substring(0, 1)
+            button.setBackgroundResource(type.color)
+            val params = LinearLayout.LayoutParams(0, WRAP_CONTENT, 1.0f)
+            button.layoutParams = params
+            button.setOnClickListener {
+                selectedType = type
+                updateProductList()
+            }
+            binding.typeLayout.addView(button)
+        }
+    }
+
+    private fun updateProductList() {
+        viewModel.updateProductList(binding.searchEt.text.toString(), selectedType)
     }
 }
