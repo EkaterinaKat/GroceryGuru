@@ -31,6 +31,9 @@ class ViewModelFactory @Inject constructor(
         if (modelClass == EntryEditViewModel::class.java) {
             return EntryEditViewModel(entryRepo) as T
         }
+        if (modelClass == ProductListViewModel::class.java) {
+            return ProductListViewModel(productRepo) as T
+        }
         throw RuntimeException()
     }
 }

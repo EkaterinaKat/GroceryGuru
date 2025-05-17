@@ -2,77 +2,31 @@ package com.katysh.groceryguru.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import com.katysh.groceryguru.GroceryGuruApplication
+import com.katysh.groceryguru.R
 import com.katysh.groceryguru.databinding.ActivitySelectProductBinding
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.presentation.EntryEditActivity.Companion.PRODUCT_RESULT_KEY
-import com.katysh.groceryguru.presentation.recycleview.ProductAdapter
-import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
-import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
-import javax.inject.Inject
 
 
-class SelectProductActivity : AppCompatActivity() {
+class SelectProductActivity : AppCompatActivity(), ProductListFragment.OnProductClickListener {
 
     private val binding by lazy {
         ActivitySelectProductBinding.inflate(layoutInflater)
     }
 
-    private val component by lazy {
-        (application as GroceryGuruApplication).component
-    }
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[ProductsViewModel::class.java]
-    }
-
-    private val adapter = ProductAdapter()
+    private val listFragment = ProductListFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        component.inject(this)
-
-        observeViewModel()
-
-        binding.productsRv.layoutManager = GridLayoutManager(this, 2)
-        binding.productsRv.adapter = adapter
-        adapter.onClickListener = {
-            productClickListener(it)
-        }
-
-        binding.searchEt.addTextChangedListener(textWatcher)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, listFragment)
+            .commit()
     }
 
-    private val textWatcher = object : TextWatcher {
-
-        override fun afterTextChanged(s: Editable?) {}
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(
-            s: CharSequence, start: Int, before: Int, count: Int
-        ) {
-            viewModel.updateProductList(s.toString(), null)
-        }
-    }
-
-    private fun observeViewModel() {
-        viewModel.productsLD.observe(this) {
-            adapter.setProducts(it)
-        }
-    }
-
-    private fun productClickListener(product: ProductWithPortions) {
+    override fun onProductClick(product: ProductWithPortions) {
         val resultIntent = Intent().apply {
             putExtra(PRODUCT_RESULT_KEY, product)
         }

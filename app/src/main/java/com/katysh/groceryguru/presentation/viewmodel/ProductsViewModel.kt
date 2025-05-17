@@ -9,7 +9,6 @@ import com.katysh.groceryguru.domain.BackupRepo
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
-import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.model.ProductWithPortions
 import com.katysh.groceryguru.util.getDateString
 import com.katysh.groceryguru.util.saveTextFileToDownloads
@@ -24,10 +23,6 @@ class ProductsViewModel(
     private val application: Application
 ) : ViewModel() {
 
-    private val _productsLD = MutableLiveData<List<ProductWithPortions>>()
-    val productsLD: LiveData<List<ProductWithPortions>>
-        get() = _productsLD
-
     private val _backupResultLD = MutableLiveData<Boolean>()
     val backupResultLD: LiveData<Boolean>
         get() = _backupResultLD
@@ -39,10 +34,6 @@ class ProductsViewModel(
     private val _errorLD = MutableLiveData<Unit>()
     val errorLD: LiveData<Unit>
         get() = _errorLD
-
-    init {
-        updateProductList(null, null)
-    }
 
     fun backup() {
         viewModelScope.launch {
@@ -92,12 +83,6 @@ class ProductsViewModel(
         viewModelScope.launch {
             productRepo.delete(portion)
             updateSelectedProduct()
-        }
-    }
-
-    fun updateProductList(str: String?, type: ProductType?) {
-        viewModelScope.launch(Dispatchers.Default) {
-            _productsLD.postValue(productRepo.getListWithPortions(str, type))
         }
     }
 }
