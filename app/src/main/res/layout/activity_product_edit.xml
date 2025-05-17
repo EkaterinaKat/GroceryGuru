@@ -61,6 +61,11 @@
 
     </LinearLayout>
 
+    <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/okButton"
         android:layout_width="wrap_content"

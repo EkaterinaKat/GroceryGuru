@@ -11,13 +11,12 @@ import com.katysh.groceryguru.model.ExpirationEntry
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
 
-
 @Database(
     entities = [Product::class, ExpirationEntry::class, Entry::class, Portion::class],
-    version = 5,
+    version = 6,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 4, to = 5)
+        AutoMigration(from = 5, to = 6)
     ]
 )
 @TypeConverters(value = [Converters::class])

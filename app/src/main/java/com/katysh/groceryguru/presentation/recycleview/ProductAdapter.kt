@@ -30,6 +30,10 @@ class ProductAdapter : RecyclerView.Adapter<ProductViewHolder>() {
         holder.itemView.setOnClickListener {
             onClickListener?.invoke(product)
         }
+        product.product.type?.color?.let {
+            holder.itemView.setBackgroundResource(it)
+        }
+
     }
 
     override fun getItemCount(): Int {

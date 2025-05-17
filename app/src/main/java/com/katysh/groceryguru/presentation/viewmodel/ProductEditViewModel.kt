@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katysh.groceryguru.domain.ProductRepo
 import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductType
 import kotlinx.coroutines.launch
 
 class ProductEditViewModel(
@@ -22,7 +23,7 @@ class ProductEditViewModel(
 
     fun validateAndSave(
         product: Product?, title: String?, desc: String?,
-        pr: String?, fat: String?, carb: String?
+        pr: String?, fat: String?, carb: String?, type: Any
     ) {
         if (title == null || title.trim().isEmpty()
             || pr == null || pr.trim().isEmpty()
@@ -31,7 +32,7 @@ class ProductEditViewModel(
         ) {
             _errorLD.value = Unit
         } else {
-            save(product, title, desc, pr.toInt(), fat.toInt(), carb.toInt())
+            save(product, title, desc, pr.toInt(), fat.toInt(), carb.toInt(), type as ProductType)
         }
     }
 
@@ -41,7 +42,8 @@ class ProductEditViewModel(
         desc: String?,
         pr: Int,
         fat: Int,
-        carb: Int
+        carb: Int,
+        type: ProductType
     ) {
         viewModelScope.launch {
             if (product == null) {
@@ -51,7 +53,8 @@ class ProductEditViewModel(
                         desc = desc,
                         proteins = pr,
                         fats = fat,
-                        carbohydrates = carb
+                        carbohydrates = carb,
+                        type = type
                     )
                 productRepo.add(newProduct)
             } else {
@@ -60,6 +63,7 @@ class ProductEditViewModel(
                 product.proteins = pr
                 product.fats = fat
                 product.carbohydrates = carb
+                product.type = type
                 productRepo.edit(product)
             }
 

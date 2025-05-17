@@ -9,8 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityProductEditBinding
 import com.katysh.groceryguru.model.Product
+import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.presentation.viewmodel.ProductEditViewModel
 import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
+import com.katysh.groceryguru.util.adjustSpinner
+import com.katysh.groceryguru.util.selectSpinnerItemByValue
 import javax.inject.Inject
 
 class ProductEditActivity : AppCompatActivity() {
@@ -46,9 +49,12 @@ class ProductEditActivity : AppCompatActivity() {
                 binding.descEt.text.toString(),
                 binding.proteinEt.text.toString(),
                 binding.fatEt.text.toString(),
-                binding.carbEt.text.toString()
+                binding.carbEt.text.toString(),
+                binding.typeSpinner.selectedItem
             )
         }
+
+        adjustSpinner(this, binding.typeSpinner, ProductType.entries) { }
 
         product = intent.getParcelableExtra(PRODUCT_EXTRA)
         product?.let {
@@ -57,6 +63,9 @@ class ProductEditActivity : AppCompatActivity() {
             binding.proteinEt.setText(it.proteins.toString())
             binding.fatEt.setText(it.fats.toString())
             binding.carbEt.setText(it.carbohydrates.toString())
+            if (it.type != null) {
+                selectSpinnerItemByValue(binding.typeSpinner, it.type)
+            }
         }
     }
 

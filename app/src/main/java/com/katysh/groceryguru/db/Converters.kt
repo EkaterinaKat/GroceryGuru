@@ -2,6 +2,7 @@ package com.katysh.groceryguru.db
 
 import androidx.room.TypeConverter
 import com.katysh.groceryguru.model.MealNum
+import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.util.removeTimeFromDate
 import java.util.Date
 
@@ -24,5 +25,15 @@ class Converters {
     @TypeConverter
     fun mealToInt(mealNum: MealNum?): Int? {
         return mealNum?.num
+    }
+
+    @TypeConverter
+    fun intToProductType(value: Int?): ProductType? {
+        return if (value == null) null else ProductType.getByNum(value)
+    }
+
+    @TypeConverter
+    fun productTypeToInt(type: ProductType?): Int? {
+        return type?.num
     }
 }
