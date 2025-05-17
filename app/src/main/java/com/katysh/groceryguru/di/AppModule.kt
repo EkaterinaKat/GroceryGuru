@@ -3,7 +3,6 @@ package com.katysh.groceryguru.di
 import android.app.Application
 import com.katysh.groceryguru.db.AppDatabase
 import com.katysh.groceryguru.db.EntryDao
-import com.katysh.groceryguru.db.ExpirationEntryDao
 import com.katysh.groceryguru.db.ProductDao
 import dagger.Module
 import dagger.Provides
@@ -15,12 +14,6 @@ class AppModule {
     @Provides
     fun provideProductDao(application: Application): ProductDao {
         return AppDatabase.getInstance(application).productDao()
-    }
-
-    @ApplicationScope
-    @Provides
-    fun provideExpirationEntryDao(application: Application): ExpirationEntryDao {
-        return AppDatabase.getInstance(application).expirationDao()
     }
 
     @ApplicationScope
