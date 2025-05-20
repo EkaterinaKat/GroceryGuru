@@ -1,10 +1,8 @@
 package com.katysh.groceryguru.db
 
 import com.katysh.groceryguru.model.Entry
-import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.model.MealNum
 import com.katysh.groceryguru.util.equalsIgnoreTime
-import com.katysh.groceryguru.util.removeTimeFromDate
 import java.util.Date
 import javax.inject.Inject
 
@@ -20,11 +18,7 @@ class EntryRepo @Inject constructor(
         dao.delete(entry.id)
     }
 
-    suspend fun getListByDate(date: Date): List<EntryWithProduct> {
-        return dao.getEntriesByDate(removeTimeFromDate(date))
-    }
-
-    suspend fun getDefaultMealNum(): MealNum {
+    fun getDefaultMealNum(): MealNum {
         val entry = dao.getEntryWithMaxId()
         if (entry == null || entry.mealNum == null) {
             return MealNum.MEAL_1
@@ -33,5 +27,15 @@ class EntryRepo @Inject constructor(
             return entry.mealNum
         }
         return MealNum.MEAL_1
+    }
+
+    suspend fun repeat(entry: Entry) {
+        val newEntry = Entry(
+            date = Date(),
+            weight = entry.weight,
+            productId = entry.productId,
+            mealNum = entry.mealNum
+        )
+        add(newEntry)
     }
 }

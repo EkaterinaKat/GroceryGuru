@@ -9,6 +9,7 @@
     <string name="start">start</string>
     <string name="end">end</string>
     <string name="delete">Delete</string>
+    <string name="repeat">Repeat</string>
     <string name="edit">Edit</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

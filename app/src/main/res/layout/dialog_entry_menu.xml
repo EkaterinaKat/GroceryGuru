@@ -17,7 +17,14 @@
         tools:text="Курица 100" />
 
     <Button
-        android:id="@+id/archive_button"
+        android:id="@+id/repeat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/repeat" />
+
+    <Button
+        android:id="@+id/delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

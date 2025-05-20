@@ -8,6 +8,7 @@ import com.katysh.groceryguru.db.EntryRepo
 import com.katysh.groceryguru.logic.ReportRepo
 import com.katysh.groceryguru.logic.ReportTable
 import com.katysh.groceryguru.model.Entry
+import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.util.TimeUnit
 import com.katysh.groceryguru.util.shiftDate
 import kotlinx.coroutines.launch
@@ -56,6 +57,12 @@ class MainActivityViewModel(
             viewModelScope.launch {
                 _reportLD.value = reportRepo.getReport(it)
             }
+        }
+    }
+
+    fun repeat(entryWithProduct: EntryWithProduct) {
+        viewModelScope.launch {
+            entryRepo.repeat(entryWithProduct.entry)
         }
     }
 }
