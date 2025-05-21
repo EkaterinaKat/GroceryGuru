@@ -1,12 +1,15 @@
 package com.katysh.groceryguru.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.katysh.groceryguru.util.UNSPECIFIED_ID
+import kotlinx.parcelize.Parcelize
 import java.util.Date
 
+@Parcelize
 @Entity(
     tableName = "entry",
     foreignKeys = [
@@ -23,12 +26,12 @@ class Entry(
     val id: Int = UNSPECIFIED_ID,
 
     @ColumnInfo(name = "entry_date")
-    val date: Date?,
+    var date: Date?,
 
-    val weight: Int?,
+    var weight: Int?,
 
     @ColumnInfo(name = "product_id")
-    val productId: Int,
+    var productId: Int,
 
-    val mealNum: MealNum?
-)
+    var mealNum: MealNum?
+) : Parcelable

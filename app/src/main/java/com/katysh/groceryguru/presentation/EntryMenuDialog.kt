@@ -27,13 +27,19 @@ class EntryMenuDialog(
     ): View {
         val itemView: View = inflater.inflate(R.layout.dialog_entry_menu, null)
 
-        itemView.findViewById<TextView>(R.id.title_text_view).text = entryWithProduct.product.getFullInfo()
+        itemView.findViewById<TextView>(R.id.title_text_view).text =
+            entryWithProduct.product.product.getFullInfo()
         itemView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             openDeleteDialog()
         }
 
         itemView.findViewById<Button>(R.id.repeat_button).setOnClickListener {
             viewModel.repeat(entryWithProduct)
+            dismiss()
+        }
+
+        itemView.findViewById<Button>(R.id.edit_button).setOnClickListener {
+            startActivity(EntryEditActivity.newIntent(requireActivity(), entryWithProduct))
             dismiss()
         }
 

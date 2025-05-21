@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.GroceryGuruApplication
 import com.katysh.groceryguru.databinding.ActivityEntryEditBinding
+import com.katysh.groceryguru.model.EntryWithProduct
 import com.katysh.groceryguru.model.MealNum
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.ProductWithPortions
@@ -28,6 +29,7 @@ import javax.inject.Inject
 
 
 class EntryEditActivity : GgActivity() {
+    private var existingEntry: EntryWithProduct? = null
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private var product: ProductWithPortions? = null
     private var selectedMealNum: MealNum? = null
@@ -74,6 +76,14 @@ class EntryEditActivity : GgActivity() {
                 setProduct(product)
             }
         }
+
+        existingEntry = intent.getParcelableExtra<EntryWithProduct>(ENTRY_KEY)
+        existingEntry?.let {
+            setProduct(it.product)
+            binding.weightEt.setText(it.entry.weight.toString())
+            binding.dateTextView.text = getDateString(it.entry.date)
+            selectMealNum(it.entry.mealNum)
+        }
     }
 
     private fun observeViewModel() {
@@ -84,7 +94,9 @@ class EntryEditActivity : GgActivity() {
             finish()
         }
         viewModel.defaultMealNumLD.observe(this) {
-            selectMealNum(it)
+            if (selectedMealNum == null) {
+                selectMealNum(it)
+            }
         }
     }
 
@@ -125,6 +137,7 @@ class EntryEditActivity : GgActivity() {
 
     private fun save() {
         viewModel.validateAndSave(
+            existingEntry,
             product?.product,
             binding.weightEt.text.toString(),
             getDateByString(binding.dateTextView.text.toString()),
@@ -139,8 +152,6 @@ class EntryEditActivity : GgActivity() {
             binding.productTv.text = it.product.getFullInfo()
             fillPortionLayout(it.portions)
         }
-
-
     }
 
     private fun fillPortionLayout(portions: List<Portion>) {
@@ -167,9 +178,12 @@ class EntryEditActivity : GgActivity() {
 
     companion object {
         const val PRODUCT_RESULT_KEY = "product_result_key"
+        const val ENTRY_KEY = "entry_key"
 
-        fun newIntent(context: Context): Intent {
-            return Intent(context, EntryEditActivity::class.java)
+        fun newIntent(context: Context, entryWithProduct: EntryWithProduct?): Intent {
+            return Intent(context, EntryEditActivity::class.java).apply {
+                putExtra(ENTRY_KEY, entryWithProduct)
+            }
         }
     }
 }

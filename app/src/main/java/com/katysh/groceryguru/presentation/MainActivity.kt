@@ -57,7 +57,7 @@ class MainActivity : GgActivity() {
         }
 
         binding.addEntryButton.setOnClickListener {
-            startActivity(EntryEditActivity.newIntent(this))
+            startActivity(EntryEditActivity.newIntent(this, null))
         }
 
         observeViewModel()

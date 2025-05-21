@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.EntryWithProduct
 import java.util.Date
@@ -25,4 +26,7 @@ interface EntryDao {
 
     @Query("SELECT * FROM entry ORDER BY id DESC LIMIT 1")
     fun getEntryWithMaxId(): Entry?
+
+    @Update
+    suspend fun update(entry: Entry): Int
 }

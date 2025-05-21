@@ -20,11 +20,13 @@ class ReportRepo @Inject constructor(
         var carbTotal = 0f
 
         for (entry in entries) {
-            val protein = entry.product.proteins!!.toFloat() * entry.entry.weight!! / 100
-            val fat = entry.product.fats!!.toFloat() * entry.entry.weight / 100
-            val carbs = entry.product.carbohydrates!!.toFloat() * entry.entry.weight / 100
+            val product = entry.product.product
+            val weight = entry.entry.weight!!
+            val protein = product.proteins!!.toFloat() * entry.entry.weight!! / 100
+            val fat = product.fats!!.toFloat() * weight / 100
+            val carbs = product.carbohydrates!!.toFloat() * weight / 100
 
-            val text = "${entry.product.title} ${entry.entry.weight}"
+            val text = "${product.title} ${entry.entry.weight}"
 
             entryLines.add(
                 ReportLine(

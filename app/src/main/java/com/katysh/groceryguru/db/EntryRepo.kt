@@ -20,11 +20,12 @@ class EntryRepo @Inject constructor(
 
     fun getDefaultMealNum(): MealNum {
         val entry = dao.getEntryWithMaxId()
-        if (entry == null || entry.mealNum == null) {
+        val lastEntryMealNum = entry?.mealNum
+        if (entry == null || lastEntryMealNum == null) {
             return MealNum.MEAL_1
         }
         if (equalsIgnoreTime(entry.date, Date())) {
-            return entry.mealNum
+            return lastEntryMealNum
         }
         return MealNum.MEAL_1
     }
@@ -37,5 +38,9 @@ class EntryRepo @Inject constructor(
             mealNum = entry.mealNum
         )
         add(newEntry)
+    }
+
+    suspend fun update(entry: Entry) {
+        dao.update(entry)
     }
 }
