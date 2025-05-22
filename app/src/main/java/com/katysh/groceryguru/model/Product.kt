@@ -16,7 +16,8 @@ data class Product(
     var proteins: Int? = null,
     var fats: Int? = null,
     var carbohydrates: Int? = null,
-    var type: ProductType? = null
+    var type: ProductType? = null,
+    var archived: Boolean? = null
 ) : Parcelable {
 
     fun getFullInfo(): String {

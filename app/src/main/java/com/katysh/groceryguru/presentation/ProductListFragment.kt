@@ -23,6 +23,11 @@ import com.katysh.groceryguru.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 class ProductListFragment : Fragment() {
+    var showArchived = false
+        set(value) {
+            field = value
+            updateProductList()
+        }
 
     private var _binding: FragmentProductListBinding? = null
     private val binding: FragmentProductListBinding
@@ -106,7 +111,7 @@ class ProductListFragment : Fragment() {
     }
 
     fun updateProductList() {
-        viewModel.updateProductList(binding.searchEt.text.toString(), selectedType)
+        viewModel.updateProductList(binding.searchEt.text.toString(), selectedType, showArchived)
     }
 
     private fun adjustTypePane() {

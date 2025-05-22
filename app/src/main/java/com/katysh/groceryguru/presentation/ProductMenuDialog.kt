@@ -19,7 +19,7 @@ import com.katysh.groceryguru.presentation.viewmodel.ProductsViewModel
 class ProductMenuDialog(
     private val context: AppCompatActivity,
     private val viewModel: ProductsViewModel,
-    private val activityUpdateKnob: () -> Unit //todo разве нам это нужно? нах нам тогда ld?
+    private val activityUpdateKnob: () -> Unit
 ) : DialogFragment() {
     private lateinit var titleTv: TextView
     private lateinit var archiveButton: Button
@@ -49,7 +49,8 @@ class ProductMenuDialog(
         viewModel.selectedProductLD.observe(this) { pwp ->
             titleTv.text = pwp.product.title
             archiveButton.setOnClickListener {
-                //todo
+                viewModel.archive(pwp.product)
+                dismiss()
             }
             editButton.setOnClickListener {
                 startActivity(ProductEditActivity.newIntent(context, pwp.product))

@@ -18,9 +18,9 @@ class ProductListViewModel(
     val productsLD: LiveData<List<ProductWithPortions>>
         get() = _productsLD
 
-    fun updateProductList(str: String?, type: ProductType?) {
+    fun updateProductList(str: String?, type: ProductType?, archived: Boolean) {
         viewModelScope.launch(Dispatchers.Default) {
-            _productsLD.postValue(productRepo.getListWithPortions(str, type))
+            _productsLD.postValue(productRepo.getListWithPortions(str, type, archived))
         }
     }
 }

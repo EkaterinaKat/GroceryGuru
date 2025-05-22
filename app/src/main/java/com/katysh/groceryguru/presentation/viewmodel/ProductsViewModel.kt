@@ -85,4 +85,10 @@ class ProductsViewModel(
             updateSelectedProduct()
         }
     }
+
+    fun archive(product: Product) {
+        viewModelScope.launch {
+            productRepo.archive(product)
+        }
+    }
 }

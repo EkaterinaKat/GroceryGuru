@@ -55,6 +55,10 @@ class ProductsActivity : GgActivity(), ProductListFragment.OnProductClickListene
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, listFragment)
             .commit()
+
+        binding.archiveCB.setOnClickListener {
+            listFragment.showArchived = binding.archiveCB.isChecked
+        }
     }
 
     private fun observeViewModel() {
@@ -69,7 +73,7 @@ class ProductsActivity : GgActivity(), ProductListFragment.OnProductClickListene
 
     override fun onProductClick(product: ProductWithPortions) {
         viewModel.selectProduct(product)
-        val dialog = ProductMenuDialog(this, viewModel) {}
+        val dialog = ProductMenuDialog(this, viewModel) { listFragment.updateProductList() }
         dialog.show(supportFragmentManager, "TaskMenuDialog")
     }
 }

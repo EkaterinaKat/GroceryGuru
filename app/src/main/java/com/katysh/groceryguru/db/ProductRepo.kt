@@ -1,6 +1,5 @@
 package com.katysh.groceryguru.db
 
-import androidx.lifecycle.LiveData
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
 import com.katysh.groceryguru.model.ProductType
@@ -31,24 +30,17 @@ class ProductRepo @Inject constructor(
         dao.update(product)
     }
 
-    suspend fun getById(id: Int): Product {
-        return dao.getById(id)
-    }
-
     suspend fun getByIdWithPortions(id: Int): ProductWithPortions {
         return dao.getProductWithPortions(id)
     }
 
-    fun getList(): List<Product> {
-        return dao.getList()
-    }
-
-    fun getListWithPortionsLd(): LiveData<List<ProductWithPortions>> {
-        return dao.getListWithPortionsLD()
-    }
-
-    fun getListWithPortions(str: String?, type: ProductType?): List<ProductWithPortions> {
+    fun getListWithPortions(
+        str: String?,
+        type: ProductType?,
+        archived: Boolean
+    ): List<ProductWithPortions> {
         var products = dao.getListWithPortions()
+            .filter { (it.product.archived == true) == archived }
         if (str != null && str.trim() != "") {
             products = products.filter {
                 it.product.title?.contains(str) == true
@@ -61,10 +53,11 @@ class ProductRepo @Inject constructor(
             }
         }
         return products
-
     }
 
-    fun getListLd(): LiveData<List<Product>> {
-        return dao.getListLd()
+    suspend fun archive(product: Product) {
+        val archived: Boolean = product.archived == true
+        product.archived = !archived
+        edit(product)
     }
 }

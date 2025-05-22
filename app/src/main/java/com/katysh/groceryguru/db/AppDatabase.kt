@@ -3,21 +3,19 @@ package com.katysh.groceryguru.db
 import android.app.Application
 import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.DeleteTable
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.AutoMigrationSpec
 import com.katysh.groceryguru.model.Entry
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
 
 @Database(
     entities = [Product::class, Entry::class, Portion::class],
-    version = 7,
+    version = 8,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 6, to = 7, spec = YourAutoMigrationSpec::class)
+        AutoMigration(from = 7, to = 8)
     ]
 )
 @TypeConverters(value = [Converters::class])
@@ -52,6 +50,3 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
-
-@DeleteTable(tableName = "expiration_entry")
-class YourAutoMigrationSpec : AutoMigrationSpec
