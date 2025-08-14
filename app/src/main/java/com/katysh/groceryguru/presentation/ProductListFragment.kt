@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.katysh.groceryguru.GroceryGuruApplication
+import com.katysh.groceryguru.R
 import com.katysh.groceryguru.databinding.FragmentProductListBinding
 import com.katysh.groceryguru.model.ProductType
 import com.katysh.groceryguru.model.ProductWithPortions
@@ -127,6 +128,17 @@ class ProductListFragment : Fragment() {
             }
             binding.typeLayout.addView(button)
         }
+
+        val button = Button(requireActivity())
+        button.text = "X"
+        button.setBackgroundResource(R.color.white)
+        val params = LinearLayout.LayoutParams(0, WRAP_CONTENT, 1.0f)
+        button.layoutParams = params
+        button.setOnClickListener {
+            selectedType = null
+            updateProductList()
+        }
+        binding.typeLayout.addView(button)
     }
 
     interface OnProductClickListener {
