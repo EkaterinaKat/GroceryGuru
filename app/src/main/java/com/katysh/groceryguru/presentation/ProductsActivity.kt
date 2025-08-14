@@ -53,6 +53,9 @@ class ProductsActivity : GgActivity(), ProductListFragment.OnProductClickListene
         binding.calculatorButton.setOnClickListener {
             startActivity(Intent(this, CalculatorActivity::class.java))
         }
+        binding.dividerButton.setOnClickListener {
+            startActivity(Intent(this, DividerActivity::class.java))
+        }
 
         observeViewModel()
 
