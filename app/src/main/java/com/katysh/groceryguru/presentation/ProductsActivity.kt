@@ -1,5 +1,6 @@
 package com.katysh.groceryguru.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -49,6 +50,9 @@ class ProductsActivity : GgActivity(), ProductListFragment.OnProductClickListene
             startActivity(ProductEditActivity.newIntent(this, null))
         }
         binding.backupButton.setOnClickListener { viewModel.backup() }
+        binding.calculatorButton.setOnClickListener {
+            startActivity(Intent(this, CalculatorActivity::class.java))
+        }
 
         observeViewModel()
 

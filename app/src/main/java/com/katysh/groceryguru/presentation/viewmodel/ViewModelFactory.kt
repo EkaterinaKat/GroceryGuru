@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.katysh.groceryguru.db.EntryRepo
+import com.katysh.groceryguru.db.IngredientRepo
 import com.katysh.groceryguru.db.ProductRepo
 import com.katysh.groceryguru.logic.BackupRepo
 import com.katysh.groceryguru.logic.ReportRepo
@@ -14,6 +15,7 @@ class ViewModelFactory @Inject constructor(
     private val entryRepo: EntryRepo,
     private val backupRepo: BackupRepo,
     private val reportRepo: ReportRepo,
+    private val ingredientRepo: IngredientRepo,
     private val application: Application
 ) : ViewModelProvider.Factory {
 
@@ -33,6 +35,12 @@ class ViewModelFactory @Inject constructor(
         }
         if (modelClass == ProductListViewModel::class.java) {
             return ProductListViewModel(productRepo) as T
+        }
+        if (modelClass == IngredientViewModel::class.java) {
+            return IngredientViewModel(ingredientRepo) as T
+        }
+        if (modelClass == CalculatorViewModel::class.java) {
+            return CalculatorViewModel(ingredientRepo, productRepo) as T
         }
         throw RuntimeException()
     }

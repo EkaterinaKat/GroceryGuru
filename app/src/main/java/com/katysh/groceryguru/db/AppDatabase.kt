@@ -7,15 +7,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.katysh.groceryguru.model.Entry
+import com.katysh.groceryguru.model.Ingredient
 import com.katysh.groceryguru.model.Portion
 import com.katysh.groceryguru.model.Product
 
 @Database(
-    entities = [Product::class, Entry::class, Portion::class],
-    version = 8,
+    entities = [Product::class, Entry::class, Portion::class, Ingredient::class],
+    version = 10,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 7, to = 8)
+        AutoMigration(from = 9, to = 10)
     ]
 )
 @TypeConverters(value = [Converters::class])
@@ -24,6 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 
     abstract fun entryDao(): EntryDao
+
+    abstract fun ingredientDao(): IngredientDao
 
     companion object {
         private const val DB_NAME = "grocery_guru_db"
@@ -43,6 +46,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     DB_NAME
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = db
                 return db

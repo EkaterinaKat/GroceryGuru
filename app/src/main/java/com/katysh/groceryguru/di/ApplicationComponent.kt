@@ -1,6 +1,7 @@
 package com.katysh.groceryguru.di
 
 import android.app.Application
+import com.katysh.groceryguru.presentation.CalculatorActivity
 import com.katysh.groceryguru.presentation.EntryEditActivity
 import com.katysh.groceryguru.presentation.MainActivity
 import com.katysh.groceryguru.presentation.ProductEditActivity
@@ -25,6 +26,8 @@ interface ApplicationComponent {
     fun inject(activity: SelectProductActivity)
 
     fun inject(fragment: ProductListFragment)
+
+    fun inject(activity: CalculatorActivity)
 
     @Component.Factory
     interface Factory {
