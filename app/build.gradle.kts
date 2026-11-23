@@ -21,6 +21,20 @@ android {
 
     }
 
+    signingConfigs {
+        getByName("debug") {
+            // Ключ проекта: если файл есть, debug-сборки подписываются им,
+            // а не ~/.android/debug.keystore конкретного компьютера.
+            val projectKeystore = file("keystore/debug.keystore")
+            if (projectKeystore.exists()) {
+                storeFile = projectKeystore
+                storePassword = "android"
+                keyAlias = "androiddebugkey"
+                keyPassword = "android"
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false

@@ -75,7 +75,8 @@ class CalculatorViewModel(
                         fats = portionPfc.fat,
                         carbohydrates = portionPfc.carb,
                         type = type as ProductType,
-                        archived = false
+                        archived = false,
+                        desc = ""
                     )
                 )
                 repo.deleteAll()
